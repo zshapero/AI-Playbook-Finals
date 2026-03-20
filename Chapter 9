@@ -563,7 +563,7 @@
         .takeaway-download-text { color: rgba(255,255,255,0.8); font-size: 18px; }
 
         .download-instructions {
-            color: #ff7e21;
+            color: #ffffff;
             font-size: 16px;
             font-style: italic;
             width: 100%;
