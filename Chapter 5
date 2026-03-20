@@ -497,7 +497,7 @@
         }
 
         .download-instructions {
-            color: #ff7e21;
+            color: #ffffff;
             font-size: 16px;
             font-style: italic;
             width: 100%;
