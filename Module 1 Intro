@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Understanding AI and Why It Matters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            font-family: 'Open Sans', sans-serif;
+            background: #ffffff;
+            color: #333;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            width: 2050px;
+            font-size: 24px;
+        }
+
+        .page-wrapper {
+            display: flex;
+            width: 2050px;
+            align-items: stretch;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 1700px;
+            padding: 60px 100px;
+        }
+
+        .pillar-label {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #FF7600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .chapter-label {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            background: #0B38DB;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #0B38DB;
+            margin-bottom: 28px;
+            line-height: 1.3;
+        }
+
+        h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 38px;
+            font-weight: 700;
+            color: #0B38DB;
+            margin-top: 56px;
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 30px;
+            font-weight: 600;
+            color: #FF7600;
+            margin-top: 36px;
+            margin-bottom: 16px;
+        }
+
+        p { margin-bottom: 16px; font-size: 24px; }
+
+        .intro-section {
+            display: flex;
+            align-items: flex-end;
+            gap: 60px;
+            margin-bottom: 48px;
+            padding-bottom: 36px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .intro-content { flex: 1; }
+
+        .intro-description {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        /* Chapters Grid */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 32px 0 48px;
+        }
+
+        .chapter-card {
+            border: 1.5px solid #e0e8ff;
+            border-radius: 10px;
+            padding: 28px 24px;
+            background: #f8f9ff;
+        }
+
+        .chapter-card-num {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF7600;
+            margin-bottom: 10px;
+        }
+
+        .chapter-card-title {
+            font-family: 'Merriweather', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0B38DB;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .chapter-card-desc {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Learning Box */
+        .learning-box {
+            background: #f8f9ff;
+            border-left: 4px solid #0B38DB;
+            padding: 24px 28px;
+            margin: 32px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-box h3 {
+            color: #0B38DB;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .learning-box ul { margin: 0; padding-left: 24px; }
+
+        .learning-box li {
+            margin-bottom: 12px;
+            color: #444;
+            font-size: 24px;
+        }
+
+        /* Actions List */
+        .actions-list { margin: 32px 0; }
+
+        .action-item {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 24px;
+            align-items: baseline;
+            padding: 28px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .action-item:first-child { border-top: 1px solid #f0f0f0; }
+
+        .action-num {
+            font-family: 'Merriweather', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #e0e0e0;
+            line-height: 1;
+        }
+
+        .action-title {
+            font-family: 'Merriweather', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 0;
+        }
+
+        /* Closing quote */
+        .intro-closing {
+            font-family: 'Merriweather', serif;
+            font-size: 26px;
+            font-style: italic;
+            color: #444;
+            border-left: 4px solid #FF7600;
+            padding: 20px 28px;
+            margin: 48px 0 32px;
+            background: #fffaf5;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.7;
+        }
+
+        /* Resource Sidebar */
+        .resource-sidebar {
+            width: 350px;
+            background: #f9f9f9;
+            border-left: 1px solid #e0e0e0;
+            padding: 24px 24px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 23px;
+            font-weight: 600;
+            color: #0B38DB;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 28px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <main class="main-content">
+
+        <!-- Header Labels -->
+        <div class="pillar-label">Module 1</div>
+        <div class="chapter-label">Introduction</div>
+
+        <!-- Title -->
+        <h1>Understanding AI and Why It Matters</h1>
+
+        <!-- Intro Section -->
+        <div class="intro-section">
+            <div class="intro-content">
+                <p class="intro-description">AI is already reshaping how communication service providers operate, compete, and serve their communities. But for most organizations, the challenge isn't access to AI — it's knowing where to start and how to lead the effort responsibly.</p>
+                <p class="intro-description">Module 1 builds the foundation. Before your organization can act on AI, your leaders and teams need a shared understanding of what AI actually is, how it applies to your business, and what it takes to adopt it with confidence.</p>
+            </div>
+        </div>
+
+        <!-- Chapters in This Module -->
+        <h2>Chapters in This Module</h2>
+        <div class="chapters-grid">
+            <div class="chapter-card">
+                <div class="chapter-card-num">Chapter 1</div>
+                <div class="chapter-card-title">Making AI Simple and Approachable</div>
+                <p class="chapter-card-desc">What AI really is, how it's already working in broadband businesses, and why the basics matter for your decisions.</p>
+            </div>
+            <div class="chapter-card">
+                <div class="chapter-card-num">Chapter 2</div>
+                <div class="chapter-card-title">Three Initial AI Decisions That Will Set Your Course</div>
+                <p class="chapter-card-desc">The three early decisions — intent, platforms, and governance — that determine how fast and safely you adopt AI.</p>
+            </div>
+            <div class="chapter-card">
+                <div class="chapter-card-num">Chapter 3</div>
+                <div class="chapter-card-title">Education &amp; Enablement</div>
+                <p class="chapter-card-desc">How to build a practical AI education program that gives every employee the confidence to participate.</p>
+            </div>
+            <div class="chapter-card">
+                <div class="chapter-card-num">Chapter 4</div>
+                <div class="chapter-card-title">Change Management</div>
+                <p class="chapter-card-desc">A five-step process for guiding your team through the transition to confident, responsible AI adoption.</p>
+            </div>
+            <div class="chapter-card">
+                <div class="chapter-card-num">Chapter 5</div>
+                <div class="chapter-card-title">Activate Your AI Leadership Team</div>
+                <p class="chapter-card-desc">How to form a cross-functional AI leadership team with clear roles and a governance policy that fits your organization.</p>
+            </div>
+        </div>
+
+        <!-- What You Will Learn -->
+        <div class="learning-box">
+            <h3>What You Will Learn</h3>
+            <ul>
+                <li>Understand what AI is and how it is already working in broadband businesses</li>
+                <li>Make the three early decisions that will shape your AI adoption</li>
+                <li>Build an education and enablement program your teams will actually use</li>
+                <li>Lead your organization through the change AI brings</li>
+                <li>Stand up an AI leadership team with clear roles and a governance policy</li>
+            </ul>
+        </div>
+
+        <!-- What Success Looks Like -->
+        <h2>What Success Looks Like</h2>
+        <p>Organizations that complete Module 1 with confidence can usually say five things:</p>
+
+        <div class="actions-list">
+            <div class="action-item">
+                <div class="action-num">1</div>
+                <div class="action-body">
+                    <div class="action-title">Leaders share a common understanding of AI and its business relevance</div>
+                </div>
+            </div>
+            <div class="action-item">
+                <div class="action-num">2</div>
+                <div class="action-body">
+                    <div class="action-title">Early AI decisions are defined — intent, platforms, and governance</div>
+                </div>
+            </div>
+            <div class="action-item">
+                <div class="action-num">3</div>
+                <div class="action-body">
+                    <div class="action-title">Employees are informed, confident, and actively participating</div>
+                </div>
+            </div>
+            <div class="action-item">
+                <div class="action-num">4</div>
+                <div class="action-body">
+                    <div class="action-title">A cross-functional AI leadership team is in place</div>
+                </div>
+            </div>
+            <div class="action-item">
+                <div class="action-num">5</div>
+                <div class="action-body">
+                    <div class="action-title">A governance policy exists and is communicated across the organization</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="intro-closing">
+            The organizations that move furthest with AI are rarely the ones with the most technology. They are the ones that took the time to get their people, decisions, and leadership structure right from the start.
+        </div>
+
+    </main>
+
+    <!-- Resource Sidebar -->
+    <aside class="resource-sidebar">
+        <div class="sidebar-header">Resources</div>
+        <hr style="border: none; border-top: 3px solid #FF7600; margin-bottom: 0;">
+    </aside>
+</div>
+</body>
+</html>
