@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Generate individual chapter PDFs and a full combined playbook PDF."""
+"""Generate individual chapter PDFs and a full combined playbook PDF.
+
+Uses Playwright (headless Chromium) for faithful browser-quality rendering.
+"""
 
 import os
 import re
-from weasyprint import HTML, CSS
+import tempfile
+from pathlib import Path
+from playwright.sync_api import sync_playwright
 
 BASE_DIR = "/home/user/AI-Playbook-Finals"
 OUTPUT_DIR = os.path.join(BASE_DIR, "pdfs")
@@ -34,190 +39,39 @@ SUPPLEMENTARY = [
     ("Thank You For Exploring This Playbook", "Thank You For Exploring This Playbook"),
 ]
 
-# CSS override to adapt HTML files (designed for web at 2050px) to print PDF
-CHAPTER_PDF_CSS = CSS(string="""
-@page {
-    size: letter;
-    margin: 30px 40px 40px 40px;
+# CSS injected into each HTML before printing to adapt the 2050px web layout for print
+PRINT_CSS = """
+<style id="print-override">
+@media print {
+    .resource-sidebar { display: none !important; }
+    .takeaway-download { display: none !important; }
+    .download-instructions { display: none !important; }
+    .video-modal-overlay { display: none !important; }
 }
 
-* {
-    box-sizing: border-box !important;
-}
-
+/* Adapt from fixed 2050px web layout to fluid print layout */
 html, body {
-    width: auto !important;
+    width: 100% !important;
     max-width: 100% !important;
-    font-size: 10px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    line-height: 1.6 !important;
 }
 
 .page-wrapper {
-    width: auto !important;
+    width: 100% !important;
     max-width: 100% !important;
     display: block !important;
 }
 
 .main-content {
     max-width: 100% !important;
-    width: auto !important;
-    padding: 0 !important;
+    width: 100% !important;
+    padding: 40px 50px !important;
 }
 
-/* Logo */
-.logo-container {
-    margin-bottom: 16px !important;
+/* Hide the sidebar and non-print elements */
+.resource-sidebar {
+    display: none !important;
 }
 
-.logo-container img {
-    width: 120px !important;
-    height: auto !important;
-}
-
-/* Chapter header */
-.pillar-label {
-    font-size: 11px !important;
-    letter-spacing: 1.5px !important;
-    margin-bottom: 4px !important;
-}
-
-.chapter-label {
-    font-size: 10px !important;
-    padding: 3px 10px !important;
-    margin-bottom: 8px !important;
-}
-
-h1 {
-    font-size: 26px !important;
-    margin-bottom: 12px !important;
-    line-height: 1.2 !important;
-}
-
-/* Header section - fix the float layout */
-.header-section {
-    overflow: hidden !important;
-    display: block !important;
-    margin-bottom: 20px !important;
-}
-
-.intro-image {
-    float: right !important;
-    width: 80px !important;
-    height: auto !important;
-    margin: 0 0 10px 12px !important;
-}
-
-.intro-text {
-    font-size: 10px !important;
-    margin-bottom: 8px !important;
-}
-
-.chapter-description {
-    font-size: 10px !important;
-    padding-bottom: 14px !important;
-}
-
-/* Section headings */
-h2 {
-    font-size: 18px !important;
-    margin-top: 22px !important;
-    margin-bottom: 10px !important;
-}
-
-h3 {
-    font-size: 14px !important;
-    margin-top: 16px !important;
-    margin-bottom: 8px !important;
-}
-
-h4 {
-    font-size: 12px !important;
-}
-
-p {
-    font-size: 10px !important;
-    margin-bottom: 8px !important;
-}
-
-/* Learning box */
-.learning-box {
-    padding: 14px 16px !important;
-    margin: 16px 0 !important;
-}
-
-.learning-box h3 {
-    font-size: 14px !important;
-    margin-bottom: 8px !important;
-}
-
-.learning-box li {
-    font-size: 10px !important;
-    margin-bottom: 4px !important;
-}
-
-/* Definition box */
-.definition-box {
-    padding: 14px 16px !important;
-    margin: 14px 0 !important;
-}
-
-/* AI types */
-.ai-type {
-    margin-bottom: 12px !important;
-}
-
-.ai-type-content {
-    padding-left: 12px !important;
-}
-
-.ai-type-label {
-    font-size: 11px !important;
-}
-
-.ai-type-image {
-    height: auto !important;
-    max-height: 200px !important;
-}
-
-/* Myth blocks */
-.myth-block {
-    margin: 12px 0 !important;
-    padding: 12px 16px !important;
-}
-
-.myth-label {
-    font-size: 11px !important;
-}
-
-.reality-label {
-    font-size: 11px !important;
-}
-
-/* Benefits list */
-.benefits-list li {
-    font-size: 10px !important;
-    margin-bottom: 6px !important;
-    padding-left: 18px !important;
-}
-
-/* Takeaway box */
-.takeaways-box {
-    padding: 16px 20px !important;
-    margin: 20px 0 16px !important;
-}
-
-.takeaways-box h2 {
-    font-size: 16px !important;
-    margin-bottom: 8px !important;
-}
-
-.takeaways-box p {
-    font-size: 10px !important;
-}
-
-/* Hide download buttons and sidebar */
 .takeaway-download {
     display: none !important;
 }
@@ -226,182 +80,99 @@ p {
     display: none !important;
 }
 
-.resource-sidebar {
-    display: none !important;
-}
-
 .video-modal-overlay {
     display: none !important;
 }
 
-/* Images */
+/* Ensure images fit */
 img {
     max-width: 100% !important;
     height: auto !important;
 }
 
-/* Tables */
+/* Scale down the intro mascot image */
+.intro-image {
+    width: 120px !important;
+    height: auto !important;
+}
+
+/* Make sure tables fit */
 table {
     width: 100% !important;
-    font-size: 9px !important;
-    border-collapse: collapse !important;
+    table-layout: auto !important;
 }
 
-th {
-    padding: 6px 8px !important;
-    font-size: 9px !important;
+/* Ensure AI type images don't overflow */
+.ai-type-image {
+    height: auto !important;
+    max-height: 300px !important;
+    overflow: hidden !important;
 }
 
-td {
-    padding: 6px 8px !important;
-    font-size: 9px !important;
+.ai-type-image img {
+    object-fit: contain !important;
+    max-height: 300px !important;
 }
-
-/* Lists */
-ul, ol {
-    margin: 6px 0 10px 20px !important;
-}
-
-li {
-    font-size: 10px !important;
-    margin-bottom: 4px !important;
-}
-
-/* Cards and grids */
-.cards-grid, .role-cards, .grid-container {
-    display: block !important;
-}
-
-.card, .role-card, .grid-item {
-    margin: 8px 0 !important;
-    padding: 10px 14px !important;
-}
-
-/* Info boxes */
-.info-box, .key-insight, .best-practice, .tip-box, .note-box {
-    padding: 12px 16px !important;
-    margin: 10px 0 !important;
-}
-
-/* Scenario / step boxes */
-.journey-step, .step, .scenario-box, .phase-box {
-    margin: 8px 0 !important;
-    padding: 10px 14px !important;
-}
-
-/* Numbered sections */
-.step-number, .phase-number {
-    font-size: 12px !important;
-}
-
-/* Assessment sections */
-.assessment-section, .quiz-section, .exercise-section {
-    padding: 12px 16px !important;
-    margin: 10px 0 !important;
-}
-
-/* Module labels in intros */
-.module-title {
-    font-size: 20px !important;
-}
-
-.module-label {
-    font-size: 10px !important;
-}
-""")
+</style>
+"""
 
 
-def generate_individual_chapter_pdfs():
-    """Generate one PDF per chapter from the HTML files."""
-    for filename, ch_num, mod_num, title in CHAPTERS:
-        filepath = os.path.join(BASE_DIR, filename)
-        if not os.path.exists(filepath):
-            print(f"  SKIP: {filename} not found")
-            continue
-
-        output_name = f"Chapter_{ch_num}_{title.replace(' ', '_').replace('&', 'and').replace('—', '-')}.pdf"
-        output_path = os.path.join(OUTPUT_DIR, output_name)
-
-        print(f"  Generating: {output_name}")
-        html = HTML(filename=filepath)
-        html.write_pdf(output_path, stylesheets=[CHAPTER_PDF_CSS])
-        print(f"  Done: {output_path}")
+def inject_print_css(html_content):
+    """Inject print-friendly CSS and strip external scripts that block loading."""
+    # Remove external script tags (CDN loads that timeout in headless mode)
+    html_content = re.sub(r'<script\s+src="https?://[^"]*"[^>]*></script>', '', html_content)
+    # Insert right before </head>
+    if "</head>" in html_content:
+        return html_content.replace("</head>", PRINT_CSS + "\n</head>")
+    # Fallback: insert at the beginning
+    return PRINT_CSS + html_content
 
 
-def generate_module_intro_pdfs():
-    """Generate one PDF per module intro."""
-    for filename, mod_num, title in MODULE_INTROS:
-        filepath = os.path.join(BASE_DIR, filename)
-        if not os.path.exists(filepath):
-            print(f"  SKIP: {filename} not found")
-            continue
-
-        output_name = f"Module_{mod_num}_Intro_{title.replace(' ', '_').replace('&', 'and')}.pdf"
-        output_path = os.path.join(OUTPUT_DIR, output_name)
-
-        print(f"  Generating: {output_name}")
-        html = HTML(filename=filepath)
-        html.write_pdf(output_path, stylesheets=[CHAPTER_PDF_CSS])
-        print(f"  Done: {output_path}")
-
-
-def generate_supplementary_pdfs():
-    """Generate PDFs for supplementary content."""
-    for filename, title in SUPPLEMENTARY:
-        filepath = os.path.join(BASE_DIR, filename)
-        if not os.path.exists(filepath):
-            print(f"  SKIP: {filename} not found")
-            continue
-
-        output_name = f"{title.replace(' ', '_').replace('&', 'and')}.pdf"
-        output_path = os.path.join(OUTPUT_DIR, output_name)
-
-        print(f"  Generating: {output_name}")
-        html = HTML(filename=filepath)
-        html.write_pdf(output_path, stylesheets=[CHAPTER_PDF_CSS])
-        print(f"  Done: {output_path}")
-
-
-def extract_body_content(filepath):
-    """Extract the inner content from the <main class='main-content'> section."""
+def html_to_pdf_playwright(page, filepath, output_path):
+    """Convert an HTML file to PDF using Playwright's Chromium renderer."""
     with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
+        html_content = f.read()
 
-    # Extract everything between <main class="main-content"> and </main>
-    match = re.search(r'<main\s+class="main-content">(.*?)</main>', content, re.DOTALL)
-    if match:
-        body = match.group(1)
-        # Remove logo container
-        body = re.sub(r'<div class="logo-container">.*?</div>', '', body, flags=re.DOTALL)
-        # Remove download buttons
-        body = re.sub(r'<div class="takeaway-download">.*?</div>\s*</div>\s*</div>', '</div>', body, flags=re.DOTALL)
-        body = re.sub(r'<a[^>]*class="takeaway-download-btn"[^>]*>.*?</a>', '', body, flags=re.DOTALL)
-        body = re.sub(r'<span class="takeaway-download-text">.*?</span>', '', body, flags=re.DOTALL)
-        body = re.sub(r'<span class="download-instructions">.*?</span>', '', body, flags=re.DOTALL)
-        return body
-    return ""
+    # Inject print CSS
+    modified_html = inject_print_css(html_content)
+
+    # Write to a temp file so Chromium can load it with file:// protocol
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False, encoding="utf-8") as tmp:
+        tmp.write(modified_html)
+        tmp_path = tmp.name
+
+    try:
+        page.goto(f"file://{tmp_path}", wait_until="domcontentloaded", timeout=60000)
+        # Let fonts and images fully render
+        page.wait_for_timeout(3000)
+
+        page.pdf(
+            path=output_path,
+            format="Letter",
+            margin={"top": "0.3in", "bottom": "0.4in", "left": "0.3in", "right": "0.3in"},
+            print_background=True,
+            prefer_css_page_size=False,
+        )
+    finally:
+        os.unlink(tmp_path)
 
 
-def build_full_playbook_html():
+def _unused_build_full_playbook_html():
     """Build a single HTML document combining all chapters in the full playbook style."""
 
-    # Collect all chapter body content
+    # Collect all sections in order
     sections = []
-
-    # Add module intros and their chapters
     module_chapters = {1: [], 2: [], 3: []}
     for filename, ch_num, mod_num, title in CHAPTERS:
         module_chapters[mod_num].append((filename, ch_num, title))
 
     for mod_filename, mod_num, mod_title in MODULE_INTROS:
-        # Add module intro
         mod_path = os.path.join(BASE_DIR, mod_filename)
         if os.path.exists(mod_path):
-            mod_content = extract_body_content(mod_path)
-            if mod_content:
-                sections.append(('module_intro', mod_num, mod_title, mod_content))
+            content = extract_body_content(mod_path)
+            if content:
+                sections.append(('module_intro', mod_num, mod_title, content))
 
-        # Add chapters in this module
         for filename, ch_num, title in module_chapters.get(mod_num, []):
             filepath = os.path.join(BASE_DIR, filename)
             if os.path.exists(filepath):
@@ -409,7 +180,6 @@ def build_full_playbook_html():
                 if content:
                     sections.append(('chapter', ch_num, title, content))
 
-    # Add supplementary content
     for filename, title in SUPPLEMENTARY:
         filepath = os.path.join(BASE_DIR, filename)
         if os.path.exists(filepath):
@@ -417,7 +187,17 @@ def build_full_playbook_html():
             if content:
                 sections.append(('supplementary', 0, title, content))
 
-    # Build the full HTML
+    # Collect all unique styles from HTML files to preserve original styling
+    all_styles = set()
+    for filename, _, _, _ in CHAPTERS:
+        filepath = os.path.join(BASE_DIR, filename)
+        if os.path.exists(filepath):
+            style = extract_style_block(filepath)
+            if style:
+                all_styles.add(style)
+                break  # They all share similar styles, just need one
+
+    # Build body parts
     body_parts = []
 
     # Cover page
@@ -434,7 +214,7 @@ def build_full_playbook_html():
     </div>
     """)
 
-    # Table of contents
+    # Table of Contents
     toc_items = []
     for section_type, num, title, _ in sections:
         if section_type == 'module_intro':
@@ -446,106 +226,91 @@ def build_full_playbook_html():
 
     body_parts.append(f"""
     <div class="toc-page">
-        <div class="page-top-bar"></div>
-        <div class="page-content">
-            <h1 class="section-title">Table of Contents</h1>
-            <div class="title-divider"></div>
-            <ul class="toc-list">
-                {''.join(toc_items)}
-            </ul>
-        </div>
+        <h1 class="playbook-section-title">Table of Contents</h1>
+        <div class="playbook-title-divider"></div>
+        <ul class="toc-list">
+            {''.join(toc_items)}
+        </ul>
     </div>
     """)
 
     # Content sections
     for section_type, num, title, content in sections:
         if section_type == 'module_intro':
-            header = f'<p class="pillar-ref">Module {num}</p>'
-            heading = f'<h1 class="section-title">{title}</h1>'
+            header = f'<p class="playbook-pillar-ref">Module {num}</p>'
         elif section_type == 'chapter':
-            header = f'<p class="pillar-ref">Chapter {num}</p>'
-            heading = f'<h1 class="section-title">{title}</h1>'
+            header = f'<p class="playbook-pillar-ref">Chapter {num}</p>'
         else:
             header = ''
-            heading = f'<h1 class="section-title">{title}</h1>'
 
         body_parts.append(f"""
-        <div class="content-section">
-            <div class="page-top-bar"></div>
-            <div class="page-content">
-                {header}
-                {heading}
-                <div class="title-divider"></div>
-                <div class="chapter-body">
-                    {content}
-                </div>
+        <div class="playbook-content-section">
+            <div class="playbook-page-top-bar"></div>
+            {header}
+            <h1 class="playbook-section-title">{title}</h1>
+            <div class="playbook-title-divider"></div>
+            <div class="chapter-body">
+                {content}
             </div>
         </div>
         """)
+
+    # Use the first chapter's styles as base, plus playbook overrides
+    base_style = list(all_styles)[0] if all_styles else ""
 
     full_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @page {{
-            size: letter;
-            margin: 50px 60px 60px 60px;
+        /* Base chapter styles (for reused content blocks) */
+        {base_style}
 
-            @bottom-right {{
-                content: counter(page);
-                font-family: 'Helvetica', 'Arial', sans-serif;
-                font-size: 10px;
-                color: #666;
-            }}
-        }}
-
-        @page :first {{
-            @bottom-right {{
-                content: none;
-            }}
-        }}
-
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-
+        /* === PLAYBOOK OVERRIDES === */
         html, body {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #333;
-            line-height: 1.6;
+            width: 100% !important;
+            max-width: 100% !important;
+            font-family: 'Open Sans', sans-serif;
             font-size: 11px;
+            line-height: 1.6;
+            color: #333;
+        }}
+
+        .page-wrapper {{
+            display: none !important;
         }}
 
         /* Cover page */
         .cover-page {{
             page-break-after: always;
             text-align: center;
-            padding-top: 80px;
+            padding-top: 60px;
         }}
 
         .cover-top-bar {{
-            position: absolute;
-            top: -50px;
-            left: -60px;
-            right: -60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 8px;
             background: #0B38DB;
         }}
 
         .cover-content {{
-            margin-top: 120px;
+            margin-top: 140px;
         }}
 
         .cover-title {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 42px;
-            font-weight: 800;
-            color: #0B38DB;
-            line-height: 1.2;
-            margin-bottom: 30px;
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 48px !important;
+            font-weight: 800 !important;
+            color: #0B38DB !important;
+            line-height: 1.2 !important;
+            margin-bottom: 30px !important;
+            background: none !important;
+            padding: 0 !important;
+            display: block !important;
         }}
 
         .cover-divider {{
@@ -556,29 +321,30 @@ def build_full_playbook_html():
         }}
 
         .cover-subtitle {{
-            font-size: 18px;
-            font-weight: 700;
-            color: #FF7600;
-            margin-bottom: 30px;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: #FF7600 !important;
+            margin-bottom: 30px !important;
         }}
 
         .cover-description {{
-            font-size: 13px;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 80px;
+            font-size: 14px !important;
+            color: #555 !important;
+            line-height: 1.8 !important;
+            margin-bottom: 80px !important;
         }}
 
         .cover-company {{
-            font-size: 22px;
-            font-weight: 800;
-            color: #FF7600;
-            margin-top: 60px;
+            font-size: 24px !important;
+            font-weight: 800 !important;
+            color: #FF7600 !important;
+            margin-top: 60px !important;
         }}
 
-        /* TOC page */
+        /* TOC */
         .toc-page {{
             page-break-after: always;
+            padding-top: 20px;
         }}
 
         .toc-list {{
@@ -587,78 +353,73 @@ def build_full_playbook_html():
         }}
 
         .toc-module {{
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
             color: #0B38DB;
-            margin-top: 16px;
+            margin-top: 18px;
             margin-bottom: 4px;
-            padding: 6px 0;
-            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+            border-bottom: 2px solid #eee;
         }}
 
         .toc-chapter {{
-            font-size: 12px;
+            font-size: 13px;
             color: #333;
-            padding: 4px 0 4px 20px;
+            padding: 6px 0 6px 24px;
             border-bottom: 1px solid #f5f5f5;
         }}
 
         .toc-supplementary {{
-            font-size: 12px;
+            font-size: 13px;
             color: #555;
-            padding: 4px 0 4px 0;
-            margin-top: 12px;
+            padding: 6px 0;
+            margin-top: 14px;
             border-bottom: 1px solid #eee;
             font-style: italic;
         }}
 
         /* Page top bar */
-        .page-top-bar {{
-            position: relative;
-            top: -50px;
-            left: -60px;
-            right: 0;
-            width: calc(100% + 120px);
+        .playbook-page-top-bar {{
             height: 6px;
             background: #0B38DB;
-            margin-bottom: -44px;
+            margin: 0 -50px 20px -50px;
         }}
 
-        .page-content {{
-            padding: 0;
+        /* Playbook section titles */
+        .playbook-pillar-ref {{
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #888 !important;
+            margin-bottom: 4px !important;
+        }}
+
+        .playbook-section-title {{
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 28px !important;
+            font-weight: 800 !important;
+            color: #0B38DB !important;
+            line-height: 1.25 !important;
+            margin-bottom: 12px !important;
+            background: none !important;
+            padding: 0 !important;
+            display: block !important;
+        }}
+
+        .playbook-title-divider {{
+            width: 60%;
+            max-width: 400px;
+            height: 3px;
+            background: #FF7600;
+            margin: 16px 0 24px 0;
         }}
 
         /* Content sections */
-        .content-section {{
+        .playbook-content-section {{
             page-break-before: always;
+            padding: 0 50px;
         }}
 
-        .pillar-ref {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 11px;
-            font-weight: 600;
-            color: #888;
-            margin-bottom: 4px;
-        }}
-
-        .section-title {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            color: #0B38DB;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }}
-
-        .title-divider {{
-            width: 100%;
-            max-width: 500px;
-            height: 3px;
-            background: #FF7600;
-            margin: 16px 0 20px 0;
-        }}
-
-        /* Override chapter body styles from HTML */
+        /* Override chapter body elements */
         .chapter-body {{
             font-size: 11px;
             line-height: 1.65;
@@ -667,11 +428,6 @@ def build_full_playbook_html():
         .chapter-body .pillar-label,
         .chapter-body .chapter-label {{
             display: none !important;
-        }}
-
-        .chapter-body .header-section {{
-            display: block !important;
-            margin-bottom: 16px;
         }}
 
         .chapter-body .intro-image {{
@@ -683,52 +439,38 @@ def build_full_playbook_html():
         }}
 
         .chapter-body h2 {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 20px;
-            font-weight: 800;
-            color: #0B38DB;
-            margin-top: 24px;
-            margin-bottom: 10px;
-            line-height: 1.3;
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            color: #0B38DB !important;
+            margin-top: 24px !important;
+            margin-bottom: 12px !important;
         }}
 
         .chapter-body h3 {{
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            color: #0B38DB;
-            margin-top: 16px;
-            margin-bottom: 8px;
-        }}
-
-        .chapter-body h4 {{
-            font-size: 13px;
-            font-weight: 700;
-            color: #333;
-            margin-top: 12px;
-            margin-bottom: 6px;
+            font-size: 16px !important;
+            margin-top: 18px !important;
+            margin-bottom: 8px !important;
         }}
 
         .chapter-body p {{
-            margin-bottom: 10px;
-            text-align: justify;
+            font-size: 11px !important;
+            margin-bottom: 10px !important;
+            text-align: justify !important;
         }}
 
         .chapter-body .intro-text {{
-            font-style: italic;
-            margin-bottom: 10px;
-        }}
-
-        .chapter-body .chapter-description {{
-            margin-bottom: 14px;
+            font-style: italic !important;
+            text-align: left !important;
         }}
 
         .chapter-body ul, .chapter-body ol {{
-            margin: 8px 0 12px 24px;
+            margin: 8px 0 12px 24px !important;
         }}
 
         .chapter-body li {{
-            margin-bottom: 4px;
+            font-size: 11px !important;
+            margin-bottom: 5px !important;
         }}
 
         .chapter-body img {{
@@ -736,235 +478,93 @@ def build_full_playbook_html():
             height: auto !important;
         }}
 
-        /* Learning box */
-        .chapter-body .learning-box {{
-            background: #f8f9fc;
-            border-left: 4px solid #0B38DB;
-            padding: 14px 18px;
-            margin: 16px 0;
-            border-radius: 4px;
+        .chapter-body table {{
+            width: 100% !important;
+            border-collapse: collapse !important;
+            font-size: 10px !important;
+            margin: 12px 0 !important;
         }}
 
-        .chapter-body .learning-box h3 {{
-            color: #0B38DB;
-            font-size: 14px;
-            margin-top: 0;
-            margin-bottom: 8px;
+        .chapter-body th {{
+            background: #0B38DB !important;
+            color: #fff !important;
+            padding: 8px 10px !important;
+            text-align: left !important;
         }}
 
-        /* Definition box */
-        .chapter-body .definition-box {{
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            padding: 14px 18px;
-            margin: 12px 0;
-            border-radius: 4px;
+        .chapter-body td {{
+            padding: 8px 10px !important;
+            border-bottom: 1px solid #e0e0e0 !important;
         }}
 
-        /* AI types */
-        .chapter-body .ai-types {{
-            margin: 12px 0;
-        }}
-
-        .chapter-body .ai-type {{
-            background: #f8f9fc;
-            border-left: 3px solid #FF7600;
-            padding: 10px 14px;
-            margin: 8px 0;
-            border-radius: 3px;
-        }}
-
-        .chapter-body .ai-type-label {{
-            font-weight: 700;
-            color: #FF7600;
-            font-size: 13px;
-            margin-bottom: 4px;
-        }}
-
-        /* Myth blocks */
-        .chapter-body .myth-block {{
-            background: #f8f9fc;
-            border: 1px solid #e8e8e8;
-            padding: 12px 16px;
-            margin: 10px 0;
-            border-radius: 4px;
-        }}
-
-        .chapter-body .myth-label {{
-            font-weight: 700;
-            color: #FF7600;
-            font-size: 12px;
-            margin-bottom: 4px;
-        }}
-
-        .chapter-body .myth-text {{
-            font-style: italic;
-            color: #555;
-            margin-bottom: 6px;
-        }}
-
-        .chapter-body .reality-label {{
-            font-weight: 700;
-            color: #333;
-            font-size: 12px;
-        }}
-
-        /* Takeaway box */
+        /* Takeaway box in playbook style */
         .chapter-body .takeaways-box {{
-            background: #0B38DB;
-            color: #fff;
-            padding: 18px 22px;
-            margin: 24px 0 12px 0;
-            border-radius: 6px;
+            background: #0B38DB !important;
+            color: #fff !important;
+            padding: 20px 24px !important;
+            margin: 28px 0 16px !important;
+            border-radius: 6px !important;
         }}
 
         .chapter-body .takeaways-box h2 {{
             color: #fff !important;
-            font-size: 18px;
-            margin-top: 0;
+            display: block !important;
+            font-size: 18px !important;
         }}
 
         .chapter-body .takeaways-box p {{
-            color: #fff;
-            font-weight: 600;
+            color: #fff !important;
         }}
 
         .chapter-body .takeaway-download {{
             display: none !important;
         }}
 
-        .chapter-body .download-instructions {{
-            display: none !important;
+        /* Learning box */
+        .chapter-body .learning-box {{
+            background: #f8f9fc !important;
+            border-left: 4px solid #0B38DB !important;
+            padding: 14px 18px !important;
+            margin: 16px 0 !important;
         }}
 
-        /* Tables */
-        .chapter-body table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-            font-size: 10px;
+        /* Myth blocks */
+        .chapter-body .myth-block {{
+            padding: 12px 16px !important;
+            margin: 10px 0 !important;
         }}
 
-        .chapter-body th {{
-            background: #0B38DB;
-            color: #fff;
-            padding: 8px 10px;
-            text-align: left;
-            font-weight: 600;
+        .chapter-body .myth-label {{
+            font-size: 12px !important;
         }}
 
-        .chapter-body td {{
-            padding: 8px 10px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: top;
+        /* AI types */
+        .chapter-body .ai-type-label {{
+            font-size: 12px !important;
         }}
 
-        .chapter-body tr:nth-child(even) td {{
-            background: #f8f9fc;
+        .chapter-body .ai-type-image {{
+            height: auto !important;
+            max-height: 200px !important;
         }}
 
-        /* Info boxes */
-        .chapter-body .info-box,
-        .chapter-body .key-insight,
-        .chapter-body .best-practice {{
-            background: #f0f4ff;
-            border-left: 4px solid #0B38DB;
-            padding: 12px 16px;
-            margin: 12px 0;
-            border-radius: 3px;
-        }}
-
-        /* Journey steps, process steps, etc */
-        .chapter-body .journey-step,
-        .chapter-body .step {{
-            margin: 10px 0;
-            padding: 10px 14px;
-            background: #fafafa;
-            border-left: 3px solid #FF7600;
-            border-radius: 3px;
-        }}
-
-        .chapter-body .step-number {{
-            font-weight: 700;
-            color: #0B38DB;
-        }}
-
-        /* Numbered sections */
-        .chapter-body .numbered-section {{
-            margin: 16px 0;
-        }}
-
-        /* Cards / grid items */
+        /* Cards */
         .chapter-body .cards-grid,
         .chapter-body .role-cards {{
             display: block !important;
         }}
 
-        .chapter-body .card,
-        .chapter-body .role-card {{
-            background: #f8f9fc;
-            border: 1px solid #e0e0e0;
-            padding: 10px 14px;
-            margin: 8px 0;
-            border-radius: 4px;
-        }}
-
-        /* Horizontal rule / divider */
-        .chapter-body hr,
-        .chapter-body .divider {{
-            border: none;
-            border-top: 2px solid #0B38DB;
-            margin: 20px 0;
-        }}
-
-        /* Sidebar content should be hidden */
-        .chapter-body .sidebar {{
+        /* Hide sidebar/download elements */
+        .resource-sidebar {{
             display: none !important;
         }}
 
-        /* Strong / bold labels in orange */
-        .chapter-body .highlight,
-        .chapter-body .orange-text {{
-            color: #FF7600;
-            font-weight: 700;
+        .download-instructions {{
+            display: none !important;
         }}
 
-        /* Benefits list */
-        .chapter-body .benefits-list li {{
-            margin-bottom: 6px;
-        }}
-
-        /* Scenario boxes */
-        .chapter-body .scenario-box {{
-            background: #fff8f0;
-            border-left: 4px solid #FF7600;
-            padding: 12px 16px;
-            margin: 10px 0;
-            border-radius: 3px;
-        }}
-
-        /* Assessment/quiz sections */
-        .chapter-body .assessment-section,
-        .chapter-body .quiz-section {{
-            background: #f8f9fc;
-            padding: 14px 18px;
-            margin: 12px 0;
-            border-radius: 4px;
-            border: 1px solid #e0e0e0;
-        }}
-
-        /* Module intro specific */
-        .chapter-body .module-title {{
-            font-size: 22px;
-            color: #0B38DB;
-            font-weight: 800;
-        }}
-
-        .chapter-body .module-label {{
-            color: #FF7600;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
+        .video-modal-overlay {{
+            display: none !important;
         }}
     </style>
 </head>
@@ -976,36 +576,238 @@ def build_full_playbook_html():
     return full_html
 
 
-def generate_full_playbook():
-    """Generate the combined full playbook PDF."""
+def generate_individual_pdfs(browser):
+    """Generate one PDF per chapter, module intro, and supplementary file."""
+    page = browser.new_page()
+
+    all_files = []
+
+    # Chapters
+    for filename, ch_num, mod_num, title in CHAPTERS:
+        safe_title = title.replace(' ', '_').replace('&', 'and').replace('—', '-')
+        output_name = f"Chapter_{ch_num}_{safe_title}.pdf"
+        all_files.append((filename, output_name))
+
+    # Module intros
+    for filename, mod_num, title in MODULE_INTROS:
+        safe_title = title.replace(' ', '_').replace('&', 'and')
+        output_name = f"Module_{mod_num}_Intro_{safe_title}.pdf"
+        all_files.append((filename, output_name))
+
+    # Supplementary
+    for filename, title in SUPPLEMENTARY:
+        safe_title = title.replace(' ', '_').replace('&', 'and')
+        output_name = f"{safe_title}.pdf"
+        all_files.append((filename, output_name))
+
+    for filename, output_name in all_files:
+        filepath = os.path.join(BASE_DIR, filename)
+        if not os.path.exists(filepath):
+            print(f"  SKIP: {filename} not found")
+            continue
+
+        output_path = os.path.join(OUTPUT_DIR, output_name)
+        print(f"  Generating: {output_name}")
+        try:
+            html_to_pdf_playwright(page, filepath, output_path)
+            print(f"  Done: {output_path}")
+        except Exception as e:
+            print(f"  ERROR generating {output_name}: {e}")
+            # Re-create the page in case it's in a bad state
+            page.close()
+            page = browser.new_page()
+
+    page.close()
+
+
+def generate_cover_and_toc(browser):
+    """Generate cover page and TOC as a PDF."""
+    # Build TOC items
+    toc_items = []
+    for mod_filename, mod_num, mod_title in MODULE_INTROS:
+        toc_items.append(f'<li class="toc-module">Module {mod_num}: {mod_title}</li>')
+        for filename, ch_num, mod, title in CHAPTERS:
+            if mod == mod_num:
+                toc_items.append(f'<li class="toc-chapter">Chapter {ch_num}: {title}</li>')
+
+    for filename, title in SUPPLEMENTARY:
+        toc_items.append(f'<li class="toc-supplementary">{title}</li>')
+
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        html, body {{ font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; color: #333; }}
+
+        .cover-page {{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+            position: relative;
+        }}
+        .cover-bar {{
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 8px; background: #0B38DB;
+        }}
+        .cover-title {{
+            font-size: 52px; font-weight: 800; color: #0B38DB;
+            line-height: 1.15; margin-bottom: 24px;
+        }}
+        .cover-divider {{
+            width: 220px; height: 4px; background: #FF7600;
+            margin: 24px auto;
+        }}
+        .cover-subtitle {{
+            font-size: 22px; font-weight: 700; color: #FF7600;
+            margin-bottom: 28px;
+        }}
+        .cover-desc {{
+            font-size: 15px; color: #555; line-height: 1.8;
+            margin-bottom: 80px;
+        }}
+        .cover-company {{
+            font-size: 26px; font-weight: 800; color: #FF7600;
+        }}
+
+        .toc-page {{
+            padding: 60px 80px;
+        }}
+        .toc-title {{
+            font-size: 32px; font-weight: 800; color: #0B38DB;
+            margin-bottom: 8px;
+        }}
+        .toc-divider {{
+            width: 300px; height: 3px; background: #FF7600;
+            margin: 16px 0 32px 0;
+        }}
+        .toc-list {{ list-style: none; padding: 0; }}
+        .toc-module {{
+            font-size: 17px; font-weight: 700; color: #0B38DB;
+            margin-top: 20px; padding: 10px 0;
+            border-bottom: 2px solid #eee;
+        }}
+        .toc-chapter {{
+            font-size: 14px; color: #333; padding: 8px 0 8px 28px;
+            border-bottom: 1px solid #f5f5f5;
+        }}
+        .toc-supplementary {{
+            font-size: 14px; color: #555; padding: 8px 0;
+            margin-top: 16px; border-bottom: 1px solid #eee;
+            font-style: italic;
+        }}
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <div class="cover-bar"></div>
+        <h1 class="cover-title">AI LEADERSHIP<br>PLAYBOOK</h1>
+        <div class="cover-divider"></div>
+        <p class="cover-subtitle">The Complete Guide</p>
+        <p class="cover-desc">A comprehensive guide for broadband leaders<br>to understand, adopt, and leverage AI</p>
+        <p class="cover-company">CALIX INC</p>
+    </div>
+    <div class="toc-page">
+        <h1 class="toc-title">Table of Contents</h1>
+        <div class="toc-divider"></div>
+        <ul class="toc-list">
+            {''.join(toc_items)}
+        </ul>
+    </div>
+</body>
+</html>"""
+
+    cover_path = os.path.join(OUTPUT_DIR, "_cover_toc.pdf")
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False, encoding="utf-8") as tmp:
+        tmp.write(html)
+        tmp_path = tmp.name
+
+    try:
+        page = browser.new_page()
+        page.goto(f"file://{tmp_path}", wait_until="domcontentloaded", timeout=15000)
+        page.wait_for_timeout(500)
+        page.pdf(
+            path=cover_path,
+            format="Letter",
+            margin={"top": "0in", "bottom": "0in", "left": "0in", "right": "0in"},
+            print_background=True,
+        )
+        page.close()
+    finally:
+        os.unlink(tmp_path)
+
+    return cover_path
+
+
+def generate_full_playbook(browser):
+    """Generate the combined full playbook PDF by merging individual chapter PDFs."""
+    from pypdf import PdfWriter
+
     output_path = os.path.join(OUTPUT_DIR, "Full_AI_Leadership_Playbook.pdf")
-    print(f"  Building full playbook HTML...")
+    print("  Generating cover page and TOC...")
+    cover_path = generate_cover_and_toc(browser)
 
-    html_content = build_full_playbook_html()
+    writer = PdfWriter()
 
-    # Save HTML for debugging
-    html_path = os.path.join(OUTPUT_DIR, "_full_playbook.html")
-    with open(html_path, "w", encoding="utf-8") as f:
-        f.write(html_content)
+    # Add cover + TOC
+    writer.append(cover_path)
 
-    print(f"  Generating full playbook PDF...")
-    html = HTML(string=html_content, base_url=BASE_DIR)
-    html.write_pdf(output_path)
+    # Add module intros and chapters in order
+    module_chapters = {1: [], 2: [], 3: []}
+    for filename, ch_num, mod_num, title in CHAPTERS:
+        module_chapters[mod_num].append((filename, ch_num, title))
+
+    for mod_filename, mod_num, mod_title in MODULE_INTROS:
+        # Add module intro PDF
+        safe_title = mod_title.replace(' ', '_').replace('&', 'and')
+        intro_pdf = os.path.join(OUTPUT_DIR, f"Module_{mod_num}_Intro_{safe_title}.pdf")
+        if os.path.exists(intro_pdf):
+            print(f"  Adding: Module {mod_num} Intro")
+            writer.append(intro_pdf)
+
+        # Add chapter PDFs in this module
+        for filename, ch_num, title in module_chapters.get(mod_num, []):
+            safe_title = title.replace(' ', '_').replace('&', 'and').replace('—', '-')
+            ch_pdf = os.path.join(OUTPUT_DIR, f"Chapter_{ch_num}_{safe_title}.pdf")
+            if os.path.exists(ch_pdf):
+                print(f"  Adding: Chapter {ch_num}")
+                writer.append(ch_pdf)
+
+    # Add supplementary
+    for filename, title in SUPPLEMENTARY:
+        safe_title = title.replace(' ', '_').replace('&', 'and')
+        supp_pdf = os.path.join(OUTPUT_DIR, f"{safe_title}.pdf")
+        if os.path.exists(supp_pdf):
+            print(f"  Adding: {title}")
+            writer.append(supp_pdf)
+
+    writer.write(output_path)
+    writer.close()
+
+    # Clean up temp cover PDF
+    os.unlink(cover_path)
+
     print(f"  Done: {output_path}")
 
 
 if __name__ == "__main__":
-    print("=== Generating Individual Chapter PDFs ===")
-    generate_individual_chapter_pdfs()
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            executable_path="/root/.cache/ms-playwright/chromium-1194/chrome-linux/chrome"
+        )
 
-    print("\n=== Generating Module Intro PDFs ===")
-    generate_module_intro_pdfs()
+        print("=== Generating Individual Chapter PDFs ===")
+        generate_individual_pdfs(browser)
 
-    print("\n=== Generating Supplementary PDFs ===")
-    generate_supplementary_pdfs()
+        print("\n=== Generating Full Combined Playbook PDF ===")
+        generate_full_playbook(browser)
 
-    print("\n=== Generating Full Combined Playbook PDF ===")
-    generate_full_playbook()
+        browser.close()
 
     print("\n=== All PDFs generated! ===")
     print(f"Output directory: {OUTPUT_DIR}")
