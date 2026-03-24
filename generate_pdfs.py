@@ -68,8 +68,14 @@ img {
     height: auto !important;
 }
 
-/* Keep logo at its intended size (chapters 6-11 use an <img> tag) */
+/* Keep logo at its intended size — different chapters use different markup:
+   Ch 6-7 use .logo-container > .logo-img, Ch 9-11 use a bare <img> as the
+   first child of .intro-content */
 .logo-img {
+    height: 48px !important;
+    width: auto !important;
+}
+.intro-content > img:first-child {
     height: 48px !important;
     width: auto !important;
 }
