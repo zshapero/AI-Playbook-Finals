@@ -2240,7 +2240,7 @@ function airRetake() {
                 <a href="https://www.calix.com/content/dam/calix/mycalix-misc/micro/aipb/Full_calix_ai_leadership_playbook_pillar_1.pdf" target="_blank" rel="noopener noreferrer" class="takeaway-download-btn" style="text-decoration: none;">Download Full Playbook</a>
                 <a href="https://www.calix.com/content/dam/calix/mycalix-misc/micro/aipb/AI_Leadership_Playbook_Glossary_.pdf" target="_blank" rel="noopener noreferrer" class="takeaway-download-btn" style="text-decoration: none;">Download Glossary</a>
                 <span class="takeaway-download-text">Share with your team</span>
-                <span class="download-instructions">(Right-click on button and select "Save Link As..." to download)</span>
+                <span class="download-instructions" style="color: #ffffff;">(Right-click on button and select "Save Link As..." to download)</span>
             </div>
         </div>
     </main>
