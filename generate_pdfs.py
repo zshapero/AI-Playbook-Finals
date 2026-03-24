@@ -67,6 +67,12 @@ img {
     max-width: 100% !important;
     height: auto !important;
 }
+
+/* Keep logo at its intended size (chapters 6-11 use an <img> tag) */
+.logo-img {
+    height: 48px !important;
+    width: auto !important;
+}
 </style>
 """
 
