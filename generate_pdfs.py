@@ -39,79 +39,33 @@ SUPPLEMENTARY = [
     ("Thank You For Exploring This Playbook", "Thank You For Exploring This Playbook"),
 ]
 
-# CSS injected into each HTML before printing to adapt the 2050px web layout for print
+# Viewport width for rendering — matches the site's content column so the page
+# looks like the website viewed in a browser window at this width.
+VIEWPORT_WIDTH = 1400
+VIEWPORT_HEIGHT = 900
+
+# Scale factor for PDF output.  The site's fonts are designed for a 2050px
+# display.  At 1400px viewport the responsive breakpoint (≤1800px) is active
+# giving a fluid layout.  Scaling to ~0.55 maps that onto Letter paper width
+# (≈758px usable at 96 dpi) so text looks natural — roughly 13px effective
+# body font, which reads like a normal printed document.
+PDF_SCALE = 0.55
+
+# Minimal CSS injected to hide non-print elements and let the existing
+# responsive styles handle layout.  We do NOT override widths or font sizes —
+# the scale parameter handles fitting to paper.
 PRINT_CSS = """
 <style id="print-override">
-@media print {
-    .resource-sidebar { display: none !important; }
-    .takeaway-download { display: none !important; }
-    .download-instructions { display: none !important; }
-    .video-modal-overlay { display: none !important; }
-}
+/* Hide interactive / sidebar elements */
+.resource-sidebar { display: none !important; }
+.takeaway-download { display: none !important; }
+.download-instructions { display: none !important; }
+.video-modal-overlay { display: none !important; }
 
-/* Adapt from fixed 2050px web layout to fluid print layout */
-html, body {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-.page-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
-    display: block !important;
-}
-
-.main-content {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 40px 50px !important;
-}
-
-/* Hide the sidebar and non-print elements */
-.resource-sidebar {
-    display: none !important;
-}
-
-.takeaway-download {
-    display: none !important;
-}
-
-.download-instructions {
-    display: none !important;
-}
-
-.video-modal-overlay {
-    display: none !important;
-}
-
-/* Ensure images fit */
+/* Ensure images fit within the page */
 img {
     max-width: 100% !important;
     height: auto !important;
-}
-
-/* Scale down the intro mascot image */
-.intro-image {
-    width: 120px !important;
-    height: auto !important;
-}
-
-/* Make sure tables fit */
-table {
-    width: 100% !important;
-    table-layout: auto !important;
-}
-
-/* Ensure AI type images don't overflow */
-.ai-type-image {
-    height: auto !important;
-    max-height: 300px !important;
-    overflow: hidden !important;
-}
-
-.ai-type-image img {
-    object-fit: contain !important;
-    max-height: 300px !important;
 }
 </style>
 """
@@ -129,7 +83,12 @@ def inject_print_css(html_content):
 
 
 def html_to_pdf_playwright(page, filepath, output_path):
-    """Convert an HTML file to PDF using Playwright's Chromium renderer."""
+    """Convert an HTML file to PDF using Playwright's Chromium renderer.
+
+    The page is rendered at VIEWPORT_WIDTH so the site's responsive CSS kicks
+    in, then scaled down via PDF_SCALE to fit naturally on Letter paper — like
+    viewing the website in a browser window resized to paper dimensions.
+    """
     with open(filepath, "r", encoding="utf-8") as f:
         html_content = f.read()
 
@@ -142,6 +101,7 @@ def html_to_pdf_playwright(page, filepath, output_path):
         tmp_path = tmp.name
 
     try:
+        page.set_viewport_size({"width": VIEWPORT_WIDTH, "height": VIEWPORT_HEIGHT})
         page.goto(f"file://{tmp_path}", wait_until="domcontentloaded", timeout=60000)
         # Let fonts and images fully render
         page.wait_for_timeout(3000)
@@ -149,9 +109,10 @@ def html_to_pdf_playwright(page, filepath, output_path):
         page.pdf(
             path=output_path,
             format="Letter",
-            margin={"top": "0.3in", "bottom": "0.4in", "left": "0.3in", "right": "0.3in"},
+            margin={"top": "0.4in", "bottom": "0.5in", "left": "0.4in", "right": "0.4in"},
             print_background=True,
             prefer_css_page_size=False,
+            scale=PDF_SCALE,
         )
     finally:
         os.unlink(tmp_path)
@@ -578,7 +539,7 @@ def _unused_build_full_playbook_html():
 
 def generate_individual_pdfs(browser):
     """Generate one PDF per chapter, module intro, and supplementary file."""
-    page = browser.new_page()
+    page = browser.new_page(viewport={"width": VIEWPORT_WIDTH, "height": VIEWPORT_HEIGHT})
 
     all_files = []
 
@@ -615,7 +576,7 @@ def generate_individual_pdfs(browser):
             print(f"  ERROR generating {output_name}: {e}")
             # Re-create the page in case it's in a bad state
             page.close()
-            page = browser.new_page()
+            page = browser.new_page(viewport={"width": VIEWPORT_WIDTH, "height": VIEWPORT_HEIGHT})
 
     page.close()
 
