@@ -23,6 +23,7 @@ CHAPTERS = [
     ("Chapter 5", 5, 1, "Activate Your AI Leadership Team"),
     ("Chapter 6", 6, 2, "AI is Really a Change Initiative"),
     ("Chapter 7", 7, 2, "The Agent Workforce Journey"),
+    ("Chapter 8", 8, 2, "Where to Start with the Calix Agentic Workforce"),
     ("Chapter 9", 9, 3, "Go Slow to Go Fast"),
     ("Chapter 10", 10, 3, "AI Governance Goes Mainstream"),
     ("Chapter 11", 11, 3, "Organizational Readiness and the Path Forward"),
