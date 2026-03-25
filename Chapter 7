@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 7: The Agent Workforce Journey</title>
+    <title>Chapter 7: The Agent Workforce Cloud Journey</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -993,7 +993,7 @@
 
         <div class="header-section">
             <div class="intro-content">
-            <h1>The Agent Workforce Journey</h1>
+            <h1>The Agent Workforce Cloud Journey</h1>
 
             <p class="intro-text">Chapter 6 established that AI success is ultimately a leadership and change challenge. This chapter focuses on the single discipline that determines whether that change sticks: data quality — and the trust it creates at every stage of your agent journey.</p>
 
@@ -1009,16 +1009,16 @@
         <div class="learning-box">
             <h3>What You'll Learn</h3>
             <ul>
-                <li>How data quality requirements evolve across the three stages of the Agent Workforce Journey</li>
+                <li>How data quality requirements evolve across the three stages of the Agent Workforce Cloud Journey</li>
                 <li>Why each stage breaks down without intentional data discipline — and how to prevent it</li>
-                <li>How the Calix Domain Agents are built to improve data quality as they are used</li>
+                <li>How the domain agents for Agent Workforce Cloud are built to improve data quality as they are used</li>
                 <li>How to build enrichment habits that support scale before you need them</li>
             </ul>
         </div>
 
-        <h2>The Agent Workforce Journey</h2>
+        <h2>The Agent Workforce Cloud Journey</h2>
 
-        <p>The Agent Workforce Journey moves through three stages, and each one raises the bar for data quality. Think of it as climbing a staircase: each step up requires stronger data underneath. At the first step, poor data leads to a bad answer — a human catches it and moves on. At the second step, that same bad data triggers a bad action, repeated at automation speed. At the third step, it cascades across agents and departments before anyone notices. Skip the discipline early and you may still get a pilot off the ground — but you will not be able to scale it.</p>
+        <p>The Agent Workforce Cloud Journey moves through three stages, and each one raises the bar for data quality. Think of it as climbing a staircase: each step up requires stronger data underneath. At the first step, poor data leads to a bad answer — a human catches it and moves on. At the second step, that same bad data triggers a bad action, repeated at automation speed. At the third step, it cascades across agents and departments before anyone notices. Skip the discipline early and you may still get a pilot off the ground — but you will not be able to scale it.</p>
 
         <div class="phase-journey">
             <div class="phase-step">
@@ -1046,11 +1046,11 @@
                 </div>
                 <div class="phase-card">
                     <div class="phase-card-title">Task Automation</div>
-                    <div class="phase-card-tagline">Do this Task</div>
-                    <p>Agents carry out tasks to meet defined goals and rules — resolving issues, building segments, triggering workflows — improving speed of execution and leveraging insights from past interactions.</p>
+                    <div class="phase-card-tagline">Do This Task</div>
+                    <p>Agents carry out tasks to meet defined goals and rules — to resolve issues, build segments, and trigger workflows — improving speed of execution and leveraging insights from past interactions.</p>
                     <div class="phase-card-section">
                         <p><strong style="color:#FF7600;">Data Enrichment</strong></p>
-                        <p>When historical data is clean and rules are well-defined, agents resolve issues correctly the first time. Each resolved interaction becomes training data.</p>
+                        <p>When historical data is clean and rules are well defined, agents resolve issues correctly the first time. Each resolved interaction becomes training data.</p>
                     </div>
                     <div class="phase-card-section">
                         <p><strong style="color:#FF7600;">Employee Experience</strong></p>
@@ -1065,7 +1065,7 @@
                 </div>
                 <div class="phase-card">
                     <div class="phase-card-title">Process Orchestration</div>
-                    <div class="phase-card-tagline">Run this Process</div>
+                    <div class="phase-card-tagline">Run This Process</div>
                     <p>Agents react to events, anticipate needs, and coordinate with other agents to complete complex tasks autonomously — across departments, systems, and workflows.</p>
                     <div class="phase-card-section">
                         <p><strong style="color:#27ae60;">Data Enrichment</strong></p>
@@ -1081,13 +1081,13 @@
         </div>
 
         <div class="important-box">
-            <p><strong>Key point:</strong> The organizations that invest in data quality habits at Stage 1 are the ones that will be ready to operate at enterprise scale by Stage 3. Those that wait will find themselves rebuilding foundations under pressure.</p>
+            <p><strong>Key Point:</strong> The organizations that invest in data quality habits at Stage 1 are the ones that will be ready to operate at enterprise scale by Stage 3. Those that wait will find themselves rebuilding foundations under pressure.</p>
         </div>
 
-        <h2>Meet Your Calix Agent Workforce</h2>
+        <h2>Meet Your Agent Workforce Cloud</h2>
 
-        <p>Imagine having an infinite number of knowledgeable employees working seamlessly 24x7 on behalf of you and your customers. That's the promise of the Calix Agentic Workforce — not a collection of isolated tools, but a coordinated system of agents that share context, hand off decisions, and act in the best interest of the subscriber at every turn.</p>
-        <p>The Calix Agent Workforce brings together agents aligned to key functions within the broadband business, each focused on a distinct set of outcomes. While every agent group has deep functional expertise, they deliver the greatest value when operating as a connected team that acts proactively, consistently, and in the best interest of the customer.</p>
+        <p>Imagine having an infinite number of knowledgeable employees working seamlessly 24x7 on behalf of you and your customers. That's the promise of Calix Agent Workforce Cloud — not a collection of isolated tools, but a coordinated system of agents that share context, hand off decisions, and act in the best interest of the subscriber at every turn.</p>
+        <p>Agent Workforce Cloud brings together agents aligned to key functions within the broadband business, each focused on a distinct set of outcomes. While every agent group has deep functional expertise, they deliver the greatest value when operating as a connected team that acts proactively, consistently, and in the best interest of the customer.</p>
 
         <!-- Two-column layout: Domain Agents + Agent-to-Agent -->
         <div class="enrichment-grid" style="margin:32px 0;">
@@ -1179,10 +1179,10 @@
 
         <h2>Knowledge Enrichment</h2>
 
-        <p>On Day 1 of any agent implementation, your knowledge base is at its weakest. This is not a failure — it is how agent systems work. They are designed to learn and improve through use. But only when they are fed accurate, current, and well-structured knowledge. Without intentional enrichment, agents learn faster from outdated information, amplifying the very problems you hoped they would solve.</p>
+        <p>On Day 1 of any agent implementation, your knowledge base is at its weakest. This is not a failure — it is how agent systems work. They are designed to learn and improve through use, but only when they are fed accurate, current, and well-structured knowledge. Without intentional enrichment, agents learn faster from outdated information, amplifying the very problems you hoped they would solve.</p>
 
         <div class="tip-box">
-            <p><strong>Key insight:</strong> Think of knowledge enrichment not as a one-time cleanup project, but as an ongoing discipline — like maintaining a garden. The work is never done, but the rewards grow with each passing season.</p>
+            <p><strong>Key Insight:</strong> Think of knowledge enrichment not as a one-time cleanup project, but as an ongoing discipline — like maintaining a garden. The work is never done, but the rewards grow with each passing season.</p>
         </div>
 
         <h3>Effective Enrichment Practices</h3>
@@ -1232,9 +1232,9 @@
         </div>
 
         <div class="takeaways-box">
-            <h2>Chapter 7 Takeaway</h2>
-            <p>Data quality is one of the few levers every organization can fully control. The Agent Workforce Journey — from Knowledge Assist to Task Automation to Process Orchestration — only delivers its promise when data quality keeps pace at every stage. Treat knowledge enrichment as an ongoing leadership discipline, not a technical chore, and each stage of agent maturity will compound the last.</p>
-            <p style="opacity:0.85;">In the next chapter, we will explore how to measure AI progress and demonstrate ROI — giving your leadership team the evidence it needs to sustain momentum and justify continued investment.</p>
+            <h2>Chapter Takeaway</h2>
+            <p>Data quality is one of the few levers every organization can fully control. The Agent Workforce Cloud Journey — from Knowledge Assist to Task Automation to Process Orchestration — only delivers its promise when data quality keeps pace at every stage. Treat knowledge enrichment as an ongoing leadership discipline, not a technical chore, and each stage of agent maturity will compound the last.</p>
+            <p>In the next chapter, we will explore how to measure AI progress and demonstrate ROI — giving your leadership team the evidence it needs to sustain momentum and justify continued investment.</p>
             <!-- ============================================================
                  SWAP: DOWNLOAD LINKS
                  Replace both href values below with the correct PDF URLs
