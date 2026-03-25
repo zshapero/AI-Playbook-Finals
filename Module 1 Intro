@@ -245,7 +245,7 @@
         <!-- Intro Section -->
         <div class="intro-section">
             <div class="intro-content">
-                <p class="intro-description">AI is already reshaping how communication service providers operate, compete, and serve their communities. But for most organizations, the challenge isn't access to AI — it's knowing where to start and how to lead the effort responsibly.</p>
+                <p class="intro-description">AI is already reshaping how communication service providers (CSPs) operate, compete, and serve their communities. But for most organizations, the challenge isn't access to AI—it's knowing where to start and how to lead the effort responsibly.</p>
                 <p class="intro-description">Module 1 builds the foundation. Before your organization can act on AI, your leaders and teams need a shared understanding of what AI actually is, how it applies to your business, and what it takes to adopt it with confidence.</p>
             </div>
         </div>
@@ -261,7 +261,7 @@
             <div class="chapter-card">
                 <div class="chapter-card-num">Chapter 2</div>
                 <div class="chapter-card-title">Three Initial AI Decisions That Will Set Your Course</div>
-                <p class="chapter-card-desc">The three early decisions — intent, platforms, and governance — that determine how fast and safely you adopt AI.</p>
+                <p class="chapter-card-desc">The three early decisions—intent, platforms, and governance—that determine how fast and safely you adopt AI.</p>
             </div>
             <div class="chapter-card">
                 <div class="chapter-card-num">Chapter 3</div>
@@ -306,7 +306,7 @@
             <div class="action-item">
                 <div class="action-num">2</div>
                 <div class="action-body">
-                    <div class="action-title">Early AI decisions are defined — intent, platforms, and governance</div>
+                    <div class="action-title">Early AI decisions are defined—intent, platforms, and governance</div>
                 </div>
             </div>
             <div class="action-item">
@@ -331,7 +331,7 @@
 
         <!-- Closing -->
         <div class="intro-closing">
-            The organizations that move furthest with AI are rarely the ones with the most technology. They are the ones that took the time to get their people, decisions, and leadership structure right from the start.
+            The organizations that move farthest with AI are rarely the ones with the most technology. They are the ones that took the time to get their people, decisions, and leadership structure right from the start.
         </div>
 
     </main>
