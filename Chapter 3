@@ -1997,7 +1997,7 @@ const PERSONAS = {
         tag:     'High Familiarity · High Interest',
         color:   '#0B38DB',
         desc:    "You're all-in! You understand AI, you've used it, and you're eager to put it to work in strategic ways. You see the potential and want to lead others in using it effectively.",
-        tip:     `Lead with strategy and scale. Deepen your leadership approach through <strong>Leading the AI-Empowered Workforce in Broadband</strong>, where you'll explore workforce-wide AI use cases and how Calix is enabling AI adoption. Expand your strategic view by engaging with insights from the <strong>AI Strategy Summit</strong>, where leaders share how AI-native organizations drive real results.`
+        tip:     `Lead with strategy and scale. Deepen your leadership approach through <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=581" target="_blank"><strong>Leading the AI-Empowered Workforce in Broadband</strong></a>, where you'll explore workforce-wide AI use cases and how Calix is enabling AI adoption. Expand your strategic view by engaging with insights from the <a href="https://www.sectionai.com/ai/ai-strategy-summit" target="_blank"><strong>AI Strategy Summit</strong></a>, where leaders share how AI-native organizations drive real results.`
     },
     disrupter: {
         key:     'disrupter',
@@ -2006,7 +2006,7 @@ const PERSONAS = {
         tag:     'Lower Familiarity · High Interest',
         color:   '#FF7600',
         desc:    "You're excited about AI and ready to try new things — but you're still building the experience needed to use it effectively at work. You may even dive in a little too fast without a strategy.",
-        tip:     `Build fluency, then apply it to real problems. Start with <strong>Leading the AI-Empowered Workforce in Broadband</strong> to understand core AI and machine learning concepts in a broadband context. Then build hands-on skills with <strong>Anthropic AI Fluency: Framework and Foundations</strong> and <strong>OpenAI Academy: AI Skills for Everyone</strong>. Once you're comfortable, explore <strong>Find: Attracting the Next Generation of Broadband Talent with AI</strong> to see how AI can be applied responsibly to hiring, skill-based evaluation, and talent pipelines.`
+        tip:     `Build fluency, then apply it to real problems. Start with <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=581" target="_blank"><strong>Leading the AI-Empowered Workforce in Broadband</strong></a> to understand core AI and machine learning concepts in a broadband context. Then build hands-on skills with <a href="https://www.anthropic.com/learn/claude-for-you" target="_blank"><strong>Anthropic AI Fluency: Framework and Foundations</strong></a> and <a href="https://academy.openai.com/" target="_blank"><strong>OpenAI Academy: AI Skills for Everyone</strong></a>. Once you're comfortable, explore <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=594" target="_blank"><strong>Find: Attracting the Next Generation of Broadband Talent with AI</strong></a> to see how AI can be applied responsibly to hiring, skill-based evaluation, and talent pipelines.`
     },
     sleeper: {
         key:     'sleeper',
@@ -2015,7 +2015,7 @@ const PERSONAS = {
         tag:     'High Familiarity · Lower Interest',
         color:   '#6B21D6',
         desc:    "You're comfortable using AI, especially in your personal life, but haven't fully explored how it could support your professional goals. You're not against it — you just haven't prioritized it yet.",
-        tip:     `Reconnect AI to workforce and business outcomes. Explore <strong>Leading the AI-Empowered Workforce in Broadband</strong> to see how AI is enhancing roles, productivity, and subscriber experiences today. To broaden your perspective, <strong>Value Worker: New Ways of Thinking</strong> highlights how adaptability and problem-solving are becoming essential skills, while <strong>Leading with Emotional Intelligence in the Age of AI</strong> reinforces the human leadership capabilities that keep people at the center of AI-enabled work.`
+        tip:     `Reconnect AI to workforce and business outcomes. Explore <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=581" target="_blank"><strong>Leading the AI-Empowered Workforce in Broadband</strong></a> to see how AI is enhancing roles, productivity, and subscriber experiences today. To broaden your perspective, <a href="https://www.thethinkingeffect.com/blank-3" target="_blank"><strong>Value Worker: New Ways of Thinking</strong></a> highlights how adaptability and problem-solving are becoming essential skills, while <a href="https://www.cio.com/article/4066359/leading-with-emotional-intelligence-in-the-age-of-ai.html" target="_blank"><strong>Leading with Emotional Intelligence in the Age of AI</strong></a> reinforces the human leadership capabilities that keep people at the center of AI-enabled work.`
     },
     observer: {
         key:     'observer',
@@ -2024,7 +2024,7 @@ const PERSONAS = {
         tag:     'Lower Familiarity · Lower Interest',
         color:   '#1A7A4A',
         desc:    "You're cautious about AI — maybe even a little skeptical. It's not clear how it fits into your role, and there might be some concern about how it could impact your work. You haven't had much hands-on experience yet, and that's okay.",
-        tip:     `Start with clarity and real-world relevance. Begin with <strong>Leading the AI-Empowered Workforce in Broadband</strong> to build a clear, beginner-friendly understanding of what AI is (and isn't) in a broadband environment. When you're ready, <strong>Find: Attracting the Next Generation of Broadband Talent with AI</strong> shows practical, people-first examples of how AI supports hiring and workforce growth. For a broader societal lens, explore the <strong>UN AI for Good: Discovery Webinar Series</strong>, which highlights responsible, human-centered AI use worldwide.`
+        tip:     `Start with clarity and real-world relevance. Begin with <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=581" target="_blank"><strong>Leading the AI-Empowered Workforce in Broadband</strong></a> to build a clear, beginner-friendly understanding of what AI is (and isn't) in a broadband environment. When you're ready, <a href="https://learn.calix.com/lms/index.php?r=site/sso&sso_type=saml&id_course=594" target="_blank"><strong>Find: Attracting the Next Generation of Broadband Talent with AI</strong></a> shows practical, people-first examples of how AI supports hiring and workforce growth. For a broader societal lens, explore the <a href="https://aiforgood.itu.int/about-us/discovery/" target="_blank"><strong>UN AI for Good: Discovery Webinar Series</strong></a>, which highlights responsible, human-centered AI use worldwide.`
     }
 };
 
