@@ -1095,7 +1095,7 @@
         <div class="learning-box">
             <h3>What You'll Learn</h3>
             <ul>
-                <li>What the goals of Education & Enablement are</li>
+                <li>What the goals of education and enablement are</li>
                 <li>Some key roles to target</li>
                 <li>How to leverage your key partners</li>
                 <li>Why and how to engage your full community</li>
@@ -1109,7 +1109,7 @@
             <p>AI adoption, like all technology adoption, succeeds or fails on the basis of one key factor: people. Even with the right strategy, platforms, and governance, progress stalls if teams aren't mentally and practically ready to work with AI.</p>
         </div>
 
-        <p>Education & Enablement are about building confidence in your employees, not just compliance with the rules. They focus on helping every employee understand why change is happening, what it means for them, and how they can actively participate.</p>
+        <p>Education and enablement are about building confidence in your employees, not just compliance with the rules. They focus on helping every employee understand why change is happening, what it means for them, and how they can actively participate.</p>
 
         <h2>Practical Steps to Launch Your Program</h2>
 
@@ -1130,7 +1130,7 @@
         <p class="edu-matrix-intro">Focus on three practical delivery methods that don't require a large budget:</p>
 
         <ul class="methods-list">
-            <li><strong>Microlearning</strong> — Short 5-10 minute modules that fit busy schedules</li>
+            <li><strong>Microlearning</strong> — Short 5- to 10-minute modules that fit busy schedules</li>
             <li><strong>Peer-Led Training</strong> — Empower early adopters to share tips with colleagues</li>
             <li><strong>Vendor Resources</strong> — Leverage materials from partners like Calix University</li>
         </ul>
@@ -1228,7 +1228,7 @@
 
         <div class="best-practice-box">
             <h3>Best Practice: Leverage Key Partners</h3>
-            <p>Include your key partners in your education & enablement initiatives, whether they're technology vendors, consultants, or ecosystem collaborators. Calix is one prime example of such a partner, but it's certain you have others that you can and do rely on. Leverage these key partners in this work as they are undoubtedly on a similar journey and would be eager, as Calix is, to help you in any way they can. This ensures all of your key business and technology partners are aligned and working together for you on best practices, security, and shared outcomes.</p>
+            <p>Include your key partners in your education and enablement initiatives, whether they're technology vendors, consultants, or ecosystem collaborators. Calix is one prime example of such a partner, but it's certain you have others that you can and do rely on. Leverage these key partners in this work as they are undoubtedly on a similar journey and would be eager, as Calix is, to help you in any way they can. This ensures all of your key business and technology partners are aligned and working together for you on best practices, security, and shared outcomes.</p>
         </div>
 
         <h2>AI Readiness Self-Assessment</h2>
@@ -2234,7 +2234,7 @@ function airRetake() {
 
         <div class="takeaways-box">
             <h2>Chapter Takeaway</h2>
-            <p>The education & enablement you give your people can be the foundation for confident, responsible AI adoption across your company. By tailoring training to each role, involving key partners, and using practical delivery methods, you can empower your company to move from awareness to mastery—turning AI from a source of anxiety into a driver of innovation and value.</p>
+            <p>The education and enablement you give your people can be the foundation for confident, responsible AI adoption across your company. By tailoring training to each role, involving key partners, and using practical delivery methods, you can empower your company to move from awareness to mastery—turning AI from a source of anxiety into a driver of innovation and value.</p>
             <div class="takeaway-download">
                 <a href="https://www.calix.com/content/dam/calix/mycalix-misc/micro/aipb/Chapter_5_Education_and_Enablement.pdf" target="_blank" rel="noopener noreferrer" class="takeaway-download-btn" style="text-decoration: none;">Download This Chapter</a>
                 <a href="https://www.calix.com/content/dam/calix/mycalix-misc/micro/aipb/Full_calix_ai_leadership_playbook_pillar_1.pdf" target="_blank" rel="noopener noreferrer" class="takeaway-download-btn" style="text-decoration: none;">Download Full Playbook</a>
