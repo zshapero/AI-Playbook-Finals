@@ -1260,7 +1260,7 @@
         <div class="sidebar-header">Resources</div>
 
         <div class="resource-section">
-            <a href="#" target="_blank" class="resource-item">
+            <a href="https://resources.nvidia.com/en-us-ai-in-telco/telco-report-state-o" target="_blank" class="resource-item">
                 <span class="resource-item-tag article">Article</span>
                 <div class="resource-item-title">2026 AI Trends in Telecom</div>
                 <div class="resource-item-desc">This year's telco AI trend report highlights how data infrastructure and operational readiness are separating early pilots from providers achieving scale. Use it to benchmark where your organization stands.</div>
