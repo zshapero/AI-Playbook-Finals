@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 2: Get Started with Calix Agent Workforce</title>
+    <title>Module 2: Get Started With Calix Agent Workforce Cloud</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -252,12 +252,12 @@
         <div class="chapter-label">Introduction</div>
 
         <!-- Title -->
-        <h1>Get Started with Calix Agent Workforce</h1>
+        <h1>Get Started With Calix Agent Workforce Cloud</h1>
 
         <!-- Intro Section -->
         <div class="intro-section">
             <div class="intro-content">
-                <p class="intro-description">AI only delivers value when it's applied to real business problems. At this point in history, the question is no longer what AI can do. It's where it should be used first, and whether your organization is ready to support it.</p>
+                <p class="intro-description">AI delivers value only when it's applied to real business problems. At this point in history, the question is no longer what AI can do. It's where it should be used first, and whether your organization is ready to support it.</p>
                 <p class="intro-description">In Module 1, the focus was awareness and shared understanding. This module moves the conversation forward. The goal now is readiness and practical activation.</p>
             </div>
         </div>
@@ -267,7 +267,7 @@
         <div class="chapters-grid">
             <div class="chapter-card">
                 <div class="chapter-card-num">Chapter 6</div>
-                <div class="chapter-card-title">AI is Really a Change Initiative</div>
+                <div class="chapter-card-title">AI Is Really a Change Initiative</div>
                 <p class="chapter-card-desc">Why AI results depend far more on people, process, and leadership alignment than on technology.</p>
             </div>
             <div class="chapter-card">
@@ -277,7 +277,7 @@
             </div>
             <div class="chapter-card">
                 <div class="chapter-card-num">Chapter 8</div>
-                <div class="chapter-card-title">Where to Start with the Calix Agentic Workforce</div>
+                <div class="chapter-card-title">Where To Start With the Agent Workforce Cloud</div>
                 <p class="chapter-card-desc">Where to activate AI agents first to drive measurable business impact across the organization.</p>
             </div>
         </div>
@@ -289,7 +289,7 @@
                 <li>Recognize why AI adoption is primarily an organizational change effort</li>
                 <li>Evaluate your organization's readiness in practical terms</li>
                 <li>Strengthen the data habits that make AI trustworthy and reliable</li>
-                <li>Identify where the Calix Agentic Workforce can create real impact</li>
+                <li>Identify where the Agent Workforce Cloud can create real impact</li>
                 <li>Prioritize next steps with confidence</li>
             </ul>
         </div>
@@ -333,7 +333,7 @@
 
         <!-- Closing -->
         <div class="intro-closing">
-            If one or more of these feels uncertain, that is normal. By the end of this module, you should have a clear picture of where your organization stands today and where to focus first.
+            If one or more of these feel uncertain, that is normal. By the end of this module, you should have a clear picture of where your organization stands today and where to focus first.
         </div>
 
     </main>
