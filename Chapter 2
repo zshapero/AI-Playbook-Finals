@@ -808,7 +808,7 @@
                 </div>
                 <div class="decision-preview-item">
                     <span class="decision-number">3</span>
-                    <span class="decision-title">Establish Governance, Security and Accountability</span>
+                    <span class="decision-title">Establish Governance, Security, and Accountability</span>
                     <p class="decision-desc">Assign clear ownership and link every AI use case to business outcomes.</p>
                 </div>
             </div>
@@ -861,7 +861,7 @@
             </tbody>
         </table>
 
-        <h3>Examples From The Field</h3>
+        <h3>Examples From the Field</h3>
 
         <div class="examples-grid">
             <div class="example-card">
@@ -892,11 +892,11 @@
         <p>Across these examples, the clearest intents share five traits:</p>
 
         <ul class="patterns-list">
-            <li><strong>Efficiency</strong> — Buy back time so people can focus on higher-value work.</li>
-            <li><strong>Consistency</strong> — Deliver the same great experience every time.</li>
-            <li><strong>Proactivity</strong> — Solve problems before subscribers feel them.</li>
-            <li><strong>Professionalism</strong> — Raise the standard of every interaction.</li>
-            <li><strong>Personalization</strong> — Tailor support and offers to each customer's reality.</li>
+            <li><strong>Efficiency</strong> — Buy back time so people can focus on higher-value work</li>
+            <li><strong>Consistency</strong> — Deliver the same great experience every time</li>
+            <li><strong>Proactivity</strong> — Solve problems before subscribers feel them</li>
+            <li><strong>Professionalism</strong> — Raise the standard of every interaction</li>
+            <li><strong>Personalization</strong> — Tailor support and offers to each customer's reality</li>
         </ul>
 
         <p>This is how you turn AI from a "shiny object" to a strategic lever, one that aligns with your company's mission and helps you deliver measurable value.</p>
@@ -909,15 +909,15 @@
 
         <p>Once you know why you're adopting AI (Decision #1), the next question is where to bring it to life (Decision #2).</p>
 
-        <p>For most broadband providers, AI should be leveraged via the platforms you already use every day: your productivity suite, CRM, billing system, support tools, and the Calix Cloud. The smartest place to start is where your data already lives driving incremental, but meaningful gains, across your company, not in a single "moonshot" project.</p>
+        <p>For most broadband providers, AI should be leveraged via the platforms you already use every day: your productivity suite, CRM, billing system, support tools, and Calix Cloud. The smartest place to start is where your data already lives driving incremental, but meaningful gains, across your company, not in a single "moonshot" project.</p>
 
         <h3>Guidelines for Choosing Wisely</h3>
 
         <ul class="guidelines-list">
-            <li><strong>Select a trusted platform</strong> that fits your data, security, and operational model. Don't reinvent an AI stack, leverage the one you have.</li>
-            <li><strong>Leverage AI-native tools</strong> such as Microsoft Copilot, Workday, or Calix Cloud that include built-in governance, auditability, and enterprise-grade security.</li>
-            <li><strong>Confirm data readiness.</strong> AI is only as good as the data it can see. Ensure that information is accurate, accessible, and compliant so models generate reliable insights.</li>
-            <li><strong>Respect governance boundaries.</strong> Your security, compliance, and privacy policies already govern the platforms you use today, so keep AI activity inside those same security boundaries.</li>
+            <li><strong>Select a trusted platform</strong> that fits your data, security, and operational model. Don't reinvent an AI stack, leverage the one you have</li>
+            <li><strong>Leverage AI-native tools</strong> such as Microsoft Copilot, Workday, or Calix Cloud that include built-in governance, auditability, and enterprise-grade security</li>
+            <li><strong>Confirm data readiness.</strong> AI is only as good as the data it can see. Ensure that information is accurate, accessible, and compliant so models generate reliable insights</li>
+            <li><strong>Respect governance boundaries.</strong> Your security, compliance, and privacy policies already govern the platforms you use today, so keep AI activity inside those same security boundaries</li>
         </ul>
 
         <div class="platform-image">
@@ -929,29 +929,29 @@
         <p>It means your network, marketing, operations, and support data stay connected under a single policy framework, letting you:</p>
 
         <ul class="calix-benefits">
-            <li>simplify daily operations,</li>
-            <li>accelerate insight-driven decision-making, and</li>
-            <li>scale AI safely as your company grows.</li>
+            <li>simplify daily operations</li>
+            <li>accelerate insight-driven decision-making</li>
+            <li>scale AI safely as your company grows</li>
         </ul>
 
         <p>This approach transforms AI from a daunting experiment into a simple extension of your existing systems, helping you move faster without losing control of the guardrails that protect your business and your subscribers today.</p>
 
-        <h2>Decision #3: Establish Governance, Security and Accountability</h2>
+        <h2>Decision #3: Establish Governance, Security, and Accountability</h2>
 
         <p>AI adoption needs clear ownership from the beginning. Assign a small group, or even just one or two people, to guide AI adoption, set guardrails, and measure results.</p>
 
         <p>Their focus should be on:</p>
 
         <ul class="focus-list">
-            <li>Defining standards for ethics, privacy, and security,</li>
-            <li>Deciding when tools are ready to deploy broadly,</li>
-            <li>Linking every use case to measurable business outcomes.</li>
+            <li>Defining standards for ethics, privacy, and security</li>
+            <li>Deciding when tools are ready to deploy broadly</li>
+            <li>Linking every use case to measurable business outcomes</li>
         </ul>
 
         <p>Clear ownership builds trust, speeds adoption, and ensures successful AI adoption.</p>
 
         <div class="note-box">
-            <p><strong>Note:</strong> Governance is so important it will be covered in Chapter 5 "Activate AI Leadership Team" and Chapter 10 AI Governance Goes Mainstream".</p>
+            <p><strong>Note:</strong> Governance is so important it will be covered in Chapter 5 "Activate AI Leadership Team" and Chapter 10 "AI Governance Goes Mainstream."</p>
         </div>
 
         <div class="takeaways-box">
