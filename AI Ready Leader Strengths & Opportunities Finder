@@ -275,7 +275,7 @@
                     <div class="rating-group" data-q="11" data-section="3"></div>
                 </div>
                 <div class="question-row">
-                    <div class="question-text"><span class="question-num">12.</span>AI operations are traceable and auditable (we can review inputs, decisions, outcomes, and intervene/rollback when needed).</div>
+                    <div class="question-text"><span class="question-num">12.</span>AI operations are traceable and auditable (we can review inputs, decisions, and outcomes, and can intervene/rollback when needed).</div>
                     <div class="rating-group" data-q="12" data-section="3"></div>
                 </div>
             </div>
@@ -288,7 +288,7 @@
                     </div>
                 </div>
                 <div class="question-row">
-                    <div class="question-text"><span class="question-num">13.</span>We have decided where AI will "live" (trusted SaaS, data/analytics layer, or custom/agent systems) and matched governance intensity to that risk level.</div>
+                    <div class="question-text"><span class="question-num">13.</span>We have decided where AI will "live" (trusted SaaS, data/analytics layer, or custom/agent systems) and have matched governance intensity to that risk level.</div>
                     <div class="rating-group" data-q="13" data-section="4"></div>
                 </div>
                 <div class="question-row">
