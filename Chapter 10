@@ -499,12 +499,6 @@
         <div class="resource-section">
             <div class="resource-section-title">Calix Resources</div>
             <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag insights">INSIGHTS</span>
-                <div class="resource-item-title">🏛️ Governing AI With Confidence</div>
-                <div class="resource-item-desc">How broadband leaders are building governance frameworks that scale trust alongside AI capability.</div>
-                <span class="resource-item-learn-more">Learn more →</span>
-            </a>
-            <a href="#" target="_blank" class="resource-item">
                 <span class="resource-item-tag video">VIDEO</span>
                 <div class="resource-item-title">🎥 Mobile World Congress Keynote with Michael Weening</div>
                 <div class="resource-item-desc">Watch the keynote from Mobile World Congress featuring Calix CEO Michael Weening.</div>
@@ -515,22 +509,6 @@
                 <div class="resource-item-title">🎙️ Buffering: What AI Transformation Really Takes</div>
                 <div class="resource-item-desc">Vele Galovski, Regional VP of Business Transformation and AI Engagements at Calix, unpacks what AI transformation really takes — and why so many efforts fail to scale.</div>
                 <span class="resource-item-learn-more">Watch now →</span>
-            </a>
-        </div>
-
-        <div class="resource-section">
-            <div class="resource-section-title">External Insights</div>
-            <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag article">ARTICLE</span>
-                <div class="resource-item-title">📄 Why AI Accountability Starts at the Top</div>
-                <div class="resource-item-desc">A look at how leading organizations are redefining executive responsibility in the age of AI-assisted decisions.</div>
-                <span class="resource-item-learn-more">Read now →</span>
-            </a>
-            <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag guide">GUIDE</span>
-                <div class="resource-item-title">📋 AI Governance Checklist</div>
-                <div class="resource-item-desc">A practical reference covering accountability, traceability, and auditability standards for AI operations.</div>
-                <span class="resource-item-learn-more">Download →</span>
             </a>
         </div>
     </aside>
