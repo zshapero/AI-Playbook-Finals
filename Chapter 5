@@ -633,7 +633,7 @@
         /* Video Modal */
         .video-modal-overlay {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -641,7 +641,7 @@
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .video-modal-overlay.active {
@@ -1059,6 +1059,11 @@
             const titleEl = document.getElementById('videoModalTitle');
             if (titleEl) titleEl.textContent = title || 'Video';
             container.innerHTML = '<iframe src="https://fast.wistia.net/embed/iframe/' + videoId + '?autoPlay=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen></iframe>';
+            // Position the modal near where the user clicked
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            var vpHeight = window.innerHeight;
+            modal.style.top = scrollY + 'px';
+            modal.style.height = vpHeight + 'px';
             modal.classList.add('active');
         }
 
