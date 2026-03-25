@@ -2262,7 +2262,7 @@ function airRetake() {
                 <div class="resource-item-desc">Calix University series designed for team leaders.</div>
                 <span class="resource-item-learn-more">Learn more →</span>
             </a>
-            <a href="https://www.calix.com/events/connexions.html" target="_blank" class="resource-item">
+            <a href="https://www.calix.com/events/connexions/highlights.html" target="_blank" class="resource-item">
                 <span class="resource-item-tag course">Event</span>
                 <div class="resource-item-title">ConneXions 2025</div>
                 <div class="resource-item-desc">Sunday and main sessions for all audience levels.</div>
