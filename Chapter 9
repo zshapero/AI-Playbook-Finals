@@ -895,32 +895,10 @@
         <div class="resource-section">
             <div class="resource-section-title">Calix Resources</div>
             <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag insights">INSIGHTS</span>
-                <div class="resource-item-title">🏛️ Governing AI at Scale</div>
-                <div class="resource-item-desc">How leading communication service providers are building governance frameworks that let AI move fast—without moving recklessly.</div>
-                <span class="resource-item-learn-more">Learn more →</span>
-            </a>
-            <a href="#" target="_blank" class="resource-item">
                 <span class="resource-item-tag video">VIDEO</span>
                 <div class="resource-item-title">🎥 Mobile World Congress Keynote with Michael Weening</div>
                 <div class="resource-item-desc">Watch the keynote from Mobile World Congress featuring Calix CEO Michael Weening.</div>
                 <span class="resource-item-learn-more">Watch now →</span>
-            </a>
-        </div>
-
-        <div class="resource-section">
-            <div class="resource-section-title">External Insights</div>
-            <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag video">VIDEO</span>
-                <div class="resource-item-title">🎥 The Human-in-the-Loop Advantage</div>
-                <div class="resource-item-desc">Industry practitioners discuss why the most effective AI deployments keep humans accountable—and how that accountability accelerates trust and scale.</div>
-                <span class="resource-item-learn-more">Watch now →</span>
-            </a>
-            <a href="#" target="_blank" class="resource-item">
-                <span class="resource-item-tag guide">GUIDE</span>
-                <div class="resource-item-title">📋 AI Operating Model Checklist</div>
-                <div class="resource-item-desc">A practical reference for defining agent roles, approval thresholds, and accountability structures across your organization.</div>
-                <span class="resource-item-learn-more">Download →</span>
             </a>
         </div>
     </aside>
