@@ -2274,10 +2274,10 @@ function airRetake() {
                 <div class="resource-item-desc">Explore curated resources to build your AI fluency and develop essential skills for the evolving workforce.</div>
                 <span class="resource-item-learn-more">Learn more →</span>
             </a>
-            <a href="/cdn-cgi/l/email-protection#4b3f392a222522252c0b282a27223365282426" class="resource-item">
+            <a href="mailto:training@calix.com" class="resource-item">
                 <span class="resource-item-tag course">Contact</span>
                 <div class="resource-item-title">Need More Help?</div>
-                <div class="resource-item-desc">Want more help getting your team AI-ready? Write to <span class="__cf_email__" data-cfemail="027670636b6c6b6c654261636e6b7a2c616d6f">[email&#160;protected]</span></div>
+                <div class="resource-item-desc">Want more help getting your team AI-ready?</div>
                 <span class="resource-item-learn-more">Get in touch →</span>
             </a>
         </div>
