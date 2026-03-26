@@ -2191,7 +2191,7 @@ function airEmailResults() {
         tipText + '\n'
     );
 
-    window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:?bcc=vele.galovski%40calix.com,Jeannine.Lyons%40calix.com&subject=' + subject + '&body=' + body;
 }
 
 function airRetake() {
