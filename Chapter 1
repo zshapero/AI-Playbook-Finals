@@ -793,7 +793,29 @@
             event.preventDefault();
             const modal = document.getElementById('videoModal');
             const container = document.getElementById('videoContainer');
-            container.innerHTML = '<script src="https://fast.wistia.com/player.js" async><\/script><script src="https://fast.wistia.com/embed/ymwlgs928d.js" async type="module"><\/script><style>wistia-player[media-id="ymwlgs928d"]:not(:defined) { background: center / contain no-repeat url("https://fast.wistia.com/embed/medias/ymwlgs928d/swatch"); display: block; filter: blur(5px); padding-top:56.25%; }</style><wistia-player media-id="ymwlgs928d" aspect="1.7777777777777777" autoplay></wistia-player>';
+            container.innerHTML = '';
+
+            var s1 = document.createElement('script');
+            s1.src = 'https://fast.wistia.com/player.js';
+            s1.async = true;
+            container.appendChild(s1);
+
+            var s2 = document.createElement('script');
+            s2.src = 'https://fast.wistia.com/embed/ymwlgs928d.js';
+            s2.async = true;
+            s2.type = 'module';
+            container.appendChild(s2);
+
+            var style = document.createElement('style');
+            style.textContent = 'wistia-player[media-id="ymwlgs928d"]:not(:defined) { background: center / contain no-repeat url("https://fast.wistia.com/embed/medias/ymwlgs928d/swatch"); display: block; filter: blur(5px); padding-top:56.25%; }';
+            container.appendChild(style);
+
+            var player = document.createElement('wistia-player');
+            player.setAttribute('media-id', 'ymwlgs928d');
+            player.setAttribute('aspect', '1.7777777777777777');
+            player.setAttribute('autoplay', '');
+            container.appendChild(player);
+
             modal.classList.add('active');
         }
 
