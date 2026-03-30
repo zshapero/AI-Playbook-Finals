@@ -209,20 +209,22 @@ def generate_pdf(output_path):
 
     for item in CHAPTERS:
         if "module" in item:
-            # Module header - blue bold 10pt with blue line above
-            if y < 100:
+            # Module header - orange bold 11pt with orange line above
+            # Force Module 3 to start on a new page
+            force_break = "Module 3" in item["module"]
+            if y < 100 or force_break:
                 _page_number(c, w)
                 c.showPage()
                 y = h - 50
 
             y -= 6
-            c.setStrokeColor(BLUE)
+            c.setStrokeColor(ORANGE)
             c.setLineWidth(1)
             c.line(LEFT, y + 3, RIGHT, y + 3)
             y -= 14
 
             c.setFont("Helvetica-Bold", 11)
-            c.setFillColor(BLUE)
+            c.setFillColor(ORANGE)
             c.drawString(LEFT, y + 2, item["module"])
             y -= 16
             continue
