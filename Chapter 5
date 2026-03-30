@@ -990,12 +990,12 @@
 
         <div class="resource-section">
             <div class="resource-section-title">Videos</div>
-            <a href="#" class="video-placeholder" onclick="openVideoModal(event, 'ymwlgs928d', 'The Agentic AI Platform')">
+            <a href="#" class="video-placeholder" id="video-agentic" data-video-id="ymwlgs928d" data-video-title="The Agentic AI Platform">
                 <div class="video-placeholder-icon">▶</div>
                 <div class="video-placeholder-title">The Agentic AI Platform</div>
                 <div class="video-placeholder-duration">Calix Wistia</div>
             </a>
-            <a href="#" class="video-placeholder" onclick="openVideoModal(event, 'djvk0iofka', 'AI Fireside Chat: Angelo Libertucci')">
+            <a href="#" class="video-placeholder" id="video-fireside" data-video-id="djvk0iofka" data-video-title="AI Fireside Chat: Angelo Libertucci">
                 <div class="video-placeholder-icon">▶</div>
                 <div class="video-placeholder-title">AI Fireside Chat: Angelo Libertucci</div>
                 <div class="video-placeholder-duration">Calix Wistia</div>
@@ -1081,6 +1081,14 @@
             if (event.key === 'Escape') {
                 closeVideoModal();
             }
+        });
+
+        // Attach click handlers to video placeholders
+        document.querySelectorAll('.video-placeholder[data-video-id]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                openVideoModal(e, el.getAttribute('data-video-id'), el.getAttribute('data-video-title'));
+            });
         });
 
         function downloadChapterPdf() {
