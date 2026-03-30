@@ -552,6 +552,8 @@
 
         .video-modal-content {
             position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
             overflow: hidden;
             border-radius: 8px;
             background: #000;
@@ -793,7 +795,7 @@
             event.preventDefault();
             const modal = document.getElementById('videoModal');
             const container = document.getElementById('videoContainer');
-            container.innerHTML = '<iframe src="https://fast.wistia.net/embed/iframe/ymwlgs928d?autoPlay=true" allowfullscreen frameborder="0" scrolling="no" allow="autoplay; fullscreen" style="width:100%;aspect-ratio:16/9;"></iframe>';
+            container.innerHTML = '<iframe src="https://fast.wistia.net/embed/iframe/ymwlgs928d?autoPlay=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen></iframe>';
             modal.classList.add('active');
         }
 
