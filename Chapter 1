@@ -793,7 +793,7 @@
             event.preventDefault();
             const modal = document.getElementById('videoModal');
             const container = document.getElementById('videoContainer');
-            container.innerHTML = '<script src="https://fast.wistia.com/player.js" async><\/script><script src="https://fast.wistia.com/embed/k1iyi61bq1.js" async type="module"><\/script><style>wistia-player[media-id="k1iyi61bq1"]:not(:defined) { background: center / contain no-repeat url("https://fast.wistia.com/embed/medias/k1iyi61bq1/swatch"); display: block; filter: blur(5px); padding-top:56.25%; }</style><wistia-player media-id="k1iyi61bq1" aspect="1.7777777777777777" autoplay></wistia-player>';
+            container.innerHTML = '<script src="https://fast.wistia.com/player.js" async><\/script><script src="https://fast.wistia.com/embed/ymwlgs928d.js" async type="module"><\/script><style>wistia-player[media-id="ymwlgs928d"]:not(:defined) { background: center / contain no-repeat url("https://fast.wistia.com/embed/medias/ymwlgs928d/swatch"); display: block; filter: blur(5px); padding-top:56.25%; }</style><wistia-player media-id="ymwlgs928d" aspect="1.7777777777777777" autoplay></wistia-player>';
             modal.classList.add('active');
         }
 
