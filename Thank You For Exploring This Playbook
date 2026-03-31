@@ -604,7 +604,7 @@
             <p>Get the resources you need to lead your AI journey with confidence.</p>
             <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
                 <a download="AI_Leadership_Playbook_Key_Takeaways.pdf" href="https://raw.githubusercontent.com/zshapero/AI-Playbook-Finals/main/pdfs/AI_Leadership_Playbook_Key_Takeaways.pdf" target="_blank" class="download-btn" id="downloadTakeaways">
-                    📋 Key Takeaways (1-Page PDF)
+                    📋 Key Takeaways (2-Pager PDF)
                 </a>
                 <a download="Full_AI_Leadership_Playbook.pdf" href="https://raw.githubusercontent.com/zshapero/AI-Playbook-Finals/main/pdfs/Full_AI_Leadership_Playbook.pdf" target="_blank" class="download-btn download-btn-secondary" id="downloadFull">
                     📘 Complete Playbook (PDF)
