@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Ready Leader Strengths & Opportunities Finder</title>
+    <title>AI-Ready Leader Strengths & Opportunities Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
@@ -113,7 +115,7 @@
         .rec-row-text { font-size: 13px; color: #666; line-height: 1.5; }
 
         .print-btn-right { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex-shrink: 0; }
-        .print-btn-note { font-size: 12px; color: #FF7600; } padding: 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 15px; font-weight: 600; color: #888; cursor: pointer; transition: border-color 0.2s, color 0.2s; margin-top: 16px; flex-shrink: 0; }
+        .print-btn-note { font-size: 12px; color: #ffffff; } padding: 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 15px; font-weight: 600; color: #888; cursor: pointer; transition: border-color 0.2s, color 0.2s; margin-top: 16px; flex-shrink: 0; }
         .reset-btn:hover { border-color: #0B38DB; color: #0B38DB; }
         .email-btn { display: block; width: 100%; padding: 12px; background: #0B38DB; border: none; border-radius: 6px; font-size: 15px; font-weight: 700; color: #fff; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 16px; flex-shrink: 0; text-align: center; text-decoration: none; font-family: 'Open Sans', sans-serif; }
         .email-btn:hover { background: #0a2fb8; transform: translateY(-1px); }
@@ -162,6 +164,13 @@
             transition: background 0.2s;
         }
         .print-btn:hover { background: #0a2fb8; }
+    
+        /* Performance: skip rendering offscreen sections */
+        .section, .key-concept, .sidebar-content, .example-card, .scenario-card,
+        .gradient-card, .agent-scenario, .case-study, .takeaway-section {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +180,7 @@
         <div class="intro-section">
             <div class="pillar-label">Self-Assessment Tool</div>
             <div class="tool-badge">Interactive Assessment</div>
-            <h1>AI Ready Leader Strengths &amp; Opportunities Finder</h1>
+            <h1>AI-Ready Leader Strengths &amp; Opportunities Finder</h1>
             <p class="intro-desc">Rate your organization honestly across seven domains. Tailored recommendations appear in real time on the right as you complete each section.</p>
         </div>
 
@@ -275,7 +284,7 @@
                     <div class="rating-group" data-q="11" data-section="3"></div>
                 </div>
                 <div class="question-row">
-                    <div class="question-text"><span class="question-num">12.</span>AI operations are traceable and auditable (we can review inputs, decisions, outcomes, and intervene/rollback when needed).</div>
+                    <div class="question-text"><span class="question-num">12.</span>AI operations are traceable and auditable (we can review inputs, decisions, and outcomes, and can intervene/rollback when needed).</div>
                     <div class="rating-group" data-q="12" data-section="3"></div>
                 </div>
             </div>
@@ -288,7 +297,7 @@
                     </div>
                 </div>
                 <div class="question-row">
-                    <div class="question-text"><span class="question-num">13.</span>We have decided where AI will "live" (trusted SaaS, data/analytics layer, or custom/agent systems) and matched governance intensity to that risk level.</div>
+                    <div class="question-text"><span class="question-num">13.</span>We have decided where AI will "live" (trusted SaaS, data/analytics layer, or custom/agent systems) and have matched governance intensity to that risk level.</div>
                     <div class="rating-group" data-q="13" data-section="4"></div>
                 </div>
                 <div class="question-row">
@@ -643,7 +652,7 @@ function emailResults() {
         recsText += '  ' + dom.name + ': ' + dom[tier] + '\n\n';
     });
 
-    var subject = 'My AI Ready Leader Strengths & Opportunities Finder Results — ' + personaName;
+    var subject = 'My AI-Ready Leader Strengths & Opportunities Finder Results — ' + personaName;
 
     var body = personaIcon + ' ' + personaName + ' — ' + personaTag + '\n'
         + personaDesc + '\n\n'
@@ -656,9 +665,9 @@ function emailResults() {
         + 'PERSONALIZED NEXT STEPS\n'
         + recsText
         + '────────────────────────────────\n'
-        + 'Generated by the AI Ready Leader Strengths & Opportunities Finder\n';
+        + 'Generated by the AI-Ready Leader Strengths & Opportunities Finder\n';
 
-    var mailto = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    var mailto = 'mailto:?bcc=vele.galovski%40calix.com,Jeannine.Lyons%40calix.com&subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     window.location.href = mailto;
 }
 

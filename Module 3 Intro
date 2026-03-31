@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 3: Scaling AI Responsibly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -305,7 +307,7 @@
         .takeaway-download-text { color: rgba(255,255,255,0.8); font-size: 18px; }
 
         .download-instructions {
-            color: #ff7e21;
+            color: #ffffff;
             font-size: 16px;
             font-style: italic;
             width: 100%;
@@ -431,6 +433,13 @@
             color: #555;
             line-height: 1.6;
             margin: 0;
+        }
+    
+        /* Performance: skip rendering offscreen sections */
+        .section, .key-concept, .sidebar-content, .example-card, .scenario-card,
+        .gradient-card, .agent-scenario, .case-study, .takeaway-section {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
         }
     </style>
 </head>
