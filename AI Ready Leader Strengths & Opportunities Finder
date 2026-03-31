@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Ready Leader Strengths & Opportunities Finder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -162,6 +165,13 @@
             transition: background 0.2s;
         }
         .print-btn:hover { background: #0a2fb8; }
+    
+        /* Performance: skip rendering offscreen sections */
+        .section, .key-concept, .sidebar-content, .example-card, .scenario-card,
+        .gradient-card, .agent-scenario, .case-study, .takeaway-section {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
+        }
     </style>
 </head>
 <body>
